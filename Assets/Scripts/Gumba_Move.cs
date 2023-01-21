@@ -38,7 +38,7 @@ public class Gumba_Move : MonoBehaviour
         
         transform.localScale = new Vector2(xMoveDirection * -1 * sizeXRatio, transform.localScale.y);
         RaycastHit2D hit = Physics2D.Raycast(transform.position, new Vector2(xMoveDirection, 0), (boxCol2d.size.x / 2 + 0.1f) * sizeXRatio, groundLayerMask.value);
-        rb.velocity = new Vector2(xMoveDirection, 0) * enemySpeed;
+        rb.velocity = new Vector2(xMoveDirection * enemySpeed, rb.velocity.y) ;
 
         if(hit.collider != null)
         {

@@ -56,6 +56,11 @@ public class Player_Stats : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, playerMovementScript.player_jump_power * 1.5f);
         }
 
+        if (collision.gameObject.CompareTag("enemy ball"))
+        {
+            DieEnemy();
+        }
+
         if (collision.gameObject.CompareTag("key level item"))
         {
             maxwells++;

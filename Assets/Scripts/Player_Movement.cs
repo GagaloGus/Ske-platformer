@@ -61,7 +61,6 @@ public class Player_Movement : MonoBehaviour
     void Boxcasting()
     {
         boxcasteo = Physics2D.BoxCast(coordsBoxCol2d, boxCol2d.size + boxCol2d.size/10, 0, Vector2.down, 0.1f, groundLayerMask);
-        print(boxcasteo.collider);
         if (boxcasteo.collider)
         {
             if (boxcasteo.collider.CompareTag("suelo"))
@@ -112,12 +111,14 @@ public class Player_Movement : MonoBehaviour
     void Walk()
     {
         rb.gravityScale = 7; rb.drag = 0.4f;
-        Jump();
-        
 
-        if (Input.GetKey(sprintKey) && Mathf.Abs(moveX) < 0.1f)
-        { moveX *= 1.5f; }
-        rb.velocity = new Vector2(moveX * playerSpeed, rb.velocity.y);
+        if (!Input.GetKey(crouchKey))
+        {
+            Jump();
+            if (Input.GetKey(sprintKey) && Mathf.Abs(moveX) > 0.1f)
+            { moveX *= 1.5f; }
+            rb.velocity = new Vector2(moveX * playerSpeed, rb.velocity.y);
+        }
     }
 
     void Swim()
@@ -150,7 +151,6 @@ public class Player_Movement : MonoBehaviour
         if (Input.GetKeyUp(jumpKey)) { isJumping = false; }
         
     }
-
     void FlipPlayer()
     {
             if (moveX > 0 && !sprRend.flipX) { sprRend.flipX = true; boxCol2d.offset = new Vector2(boxCol2d.offset.x * -1, boxCol2d.offset.y); }
@@ -176,7 +176,6 @@ public class Player_Movement : MonoBehaviour
     {
         get { return crouchKey; }
     }
-    
     public bool is_grounded
     {
         get { return isGrounded; }
