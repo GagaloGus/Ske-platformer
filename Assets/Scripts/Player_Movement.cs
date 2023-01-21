@@ -16,28 +16,23 @@ public class Player_Movement : MonoBehaviour
         jumpTimeCounter,
         playerJumpPower = 15;
         
-<<<<<<< HEAD
+
     public bool
-=======
-    bool
-        facingRight,
->>>>>>> parent of 5d62601 (o my gah)
         isGrounded,
         isJumping,
+        isSwimming,
         AbleToMove = false;
 
-<<<<<<< HEAD
-
-=======
+    Vector2 coordsBoxCol2d;
     LayerMask groundLayerMask;
->>>>>>> parent of 5d62601 (o my gah)
 
-   
+    public int falling;
 
     SpriteRenderer sprRend;
     Rigidbody2D rb;
-    public BoxCollider2D boxCol2d;
+    BoxCollider2D boxCol2d;
     Animator animator;
+    RaycastHit2D boxcasteo;
 
     // Start is called before the first frame update
     void Start()
@@ -46,80 +41,85 @@ public class Player_Movement : MonoBehaviour
         animator = GetComponent<Animator>();
         boxCol2d = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
-<<<<<<< HEAD
-        playerDistanceToBottom = boxCol2d.bounds.size.y + 0.1f;
-=======
-        playerDistanceToBottom = boxCol2d.bounds.size.y + 0.05f;
+
+        //playerDistanceToBottom = boxCol2d.bounds.size.y + 0.05f;
         groundLayerMask = LayerMask.GetMask("Ground");
-        
-
-        //pone al bichejo mirando a la derecha
-        FlipPlayer();
->>>>>>> parent of 5d62601 (o my gah)
     }
-
-    
 
     // Update is called once per frame
     void Update()
     {
-<<<<<<< HEAD
-        moveX = Input.GetAxis("Horizontal");
-=======
-        if (!Input.GetKey(crouchKey) && AbleToMove) { PlayerMove(); }
->>>>>>> parent of 5d62601 (o my gah)
-        Raycasting();
+        coordsBoxCol2d = transform.position + new Vector3(boxCol2d.offset.x, boxCol2d.offset.y, 0);
 
-        if (AbleToMove && !Input.GetKey(crouchKey)) 
+        if (AbleToMove)
         {
-            if (!isSwimming) { Move(); }
-            else { Swim(); }
+            moveX = Input.GetAxis("Horizontal");
+            Boxcasting();
+        }
+    }
+
+    void Boxcasting()
+    {
+        boxcasteo = Physics2D.BoxCast(coordsBoxCol2d, boxCol2d.size + boxCol2d.size/10, 0, Vector2.down, 0.1f, groundLayerMask);
+        print(boxcasteo.collider);
+        if (boxcasteo.collider)
+        {
+            if (boxcasteo.collider.CompareTag("suelo"))
+            {
+                falling = 0;
+                Walk();
+            }
+            else if (boxcasteo.collider.CompareTag("water"))
+            {
+                falling = 3;
+                Swim();
+            }
             FlipPlayer();
+            GetComponent<Player_Stats>().bonked_enemy = false;
         }
-    }
-    void Raycasting()
-    {
-        RaycastHit2D groundRaycastR = Physics2D.Raycast(
-            new Vector2(transform.position.x + boxCol2d.bounds.size.x / 2 + boxCol2d.offset.x, transform.position.y), 
-            Vector2.down, playerDistanceToBottom);
-        RaycastHit2D groundRaycastL = Physics2D.Raycast(
-            new Vector2(transform.position.x - boxCol2d.bounds.size.x / 2 + boxCol2d.offset.x, transform.position.y), 
-            Vector2.down, playerDistanceToBottom);
-        bool RaysHitSomething = (groundRaycastR.collider != null) || (groundRaycastL.collider != null);
-
-        print(groundRaycastR.collider.name);
-        if (RaysHitSomething)
+        else
         {
-            isGrounded = true;
+            Walk();
+            if (GetComponent<Player_Stats>().bonked_enemy) { falling = 2; }
+            else
+            {
+                if (rb.velocity.y > 0.1f) { falling = 1; }
+                else if (rb.velocity.y < -0.1f) { falling = -1; }
+            }
         }
-        else { isGrounded = false; }
+        
     }
 
-    void PlayerMove()
+    void OnDrawGizmos()
     {
-<<<<<<< HEAD
-        rb.gravityScale = 7;
-        rb.drag = 0.4f;
-        //controles
+        Gizmos.color = Color.red;
+
+        //Check if there has been a hit yet
+        if (boxcasteo)
+        {
+            //Draw a Ray forward from GameObject toward the hit
+            Gizmos.DrawRay(coordsBoxCol2d, Vector2.down * boxcasteo.distance);
+            //Draw a cube that extends to where the hit exists
+            Gizmos.DrawWireCube(coordsBoxCol2d, boxCol2d.size);
+        }
+        //If there hasn't been a hit yet, draw the ray at the maximum distance
+        else
+        {
+            //Draw a Ray forward from GameObject toward the maximum distance
+            Gizmos.DrawRay(coordsBoxCol2d, Vector2.down * 100);
+        }
+    }
+    void Walk()
+    {
+        rb.gravityScale = 7; rb.drag = 0.4f;
         Jump();
         
-=======
-        //controles
-        PlayerJump();
-        moveX = Input.GetAxis("Horizontal");
 
-
->>>>>>> parent of 5d62601 (o my gah)
-        if (Input.GetKey(sprintKey) && moveX != 0)
+        if (Input.GetKey(sprintKey) && Mathf.Abs(moveX) < 0.1f)
         { moveX *= 1.5f; }
-
-        //animacion
-        
-        
-        //fisicas
         rb.velocity = new Vector2(moveX * playerSpeed, rb.velocity.y);
     }
-<<<<<<< HEAD
+
     void Swim()
     {
         rb.gravityScale = 1; rb.drag = 4;
@@ -129,11 +129,7 @@ public class Player_Movement : MonoBehaviour
             rb.velocity = new Vector2(moveX * playerSpeed/3, playerJumpPower/1.5f);
         }
     }
-    void Jump()
-=======
-
-    void PlayerJump()
->>>>>>> parent of 5d62601 (o my gah)
+   void Jump()
     {
         if (Input.GetKeyDown(jumpKey) && isGrounded)
         {
@@ -157,26 +153,12 @@ public class Player_Movement : MonoBehaviour
 
     void FlipPlayer()
     {
-        if (isGrounded || isSwimming) {
-
-            if (moveX > 0 && !sprRend.flipX)
-            {
-                boxCol2d.offset = new Vector2(boxCol2d.offset.x * -1, boxCol2d.offset.y);
-                sprRend.flipX = true;
-            }
-            else if (moveX < 0 && sprRend.flipX)
-            {
-                boxCol2d.offset = new Vector2(boxCol2d.offset.x * -1, boxCol2d.offset.y);
-                sprRend.flipX = false;
-            }
-        }
+            if (moveX > 0 && !sprRend.flipX) { sprRend.flipX = true; boxCol2d.offset = new Vector2(boxCol2d.offset.x * -1, boxCol2d.offset.y); }
+            else if (moveX < 0 && sprRend.flipX) { sprRend.flipX = false; boxCol2d.offset = new Vector2(boxCol2d.offset.x * -1, boxCol2d.offset.y);}
     }
-
-    private void OnDrawGizmos()
+    public int falling_pm    
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(new Vector2(transform.position.x + boxCol2d.bounds.size.x / 2 + boxCol2d.offset.x, transform.position.y), Vector2.down);
-        Gizmos.DrawRay(new Vector2(transform.position.x - boxCol2d.bounds.size.x / 2 + boxCol2d.offset.x, transform.position.y), Vector2.down);
+        get { return falling; }
     }
     public float player_speed
     {
@@ -194,18 +176,7 @@ public class Player_Movement : MonoBehaviour
     {
         get { return crouchKey; }
     }
-<<<<<<< HEAD
-    public bool is_swimming
-    {
-        get { return isSwimming; }
-        set { isSwimming = value; }
-=======
-    public bool facing_Right
-    {
-        get { return facingRight; }
-        set { facingRight = value; }
->>>>>>> parent of 5d62601 (o my gah)
-    }
+    
     public bool is_grounded
     {
         get { return isGrounded; }
@@ -220,5 +191,10 @@ public class Player_Movement : MonoBehaviour
     {
         get { return AbleToMove; }
         set { AbleToMove = value; }
+    }
+    public bool is_swimming
+    {
+        get { return isSwimming; }
+        set { isSwimming = value; }
     }
 }

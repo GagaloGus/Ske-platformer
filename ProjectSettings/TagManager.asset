@@ -10,6 +10,8 @@ TagManager:
   - ice
   - key level item
   - Checkpoint
+  - water
+  - feet box
   layers:
   - Default
   - TransparentFX

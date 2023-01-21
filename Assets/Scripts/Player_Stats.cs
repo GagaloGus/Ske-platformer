@@ -24,18 +24,19 @@ public class Player_Stats : MonoBehaviour
         playerMovementScript = GetComponent<Player_Movement>();
         if (transform.position.y < -7) {  DieFall(); }
 
-        //if (GetComponent<Player_Movement>().is_grounded) 
-        //{ animator.SetBool("airSpin", false); } 
+        if(playerMovementScript.falling_pm == 0) { playerMovementScript.is_grounded = true; playerMovementScript.is_swimming = false; }
+        else if (playerMovementScript.falling_pm == 3) { playerMovementScript.is_grounded = false; playerMovementScript.is_swimming = true; }
+        else { playerMovementScript.is_grounded = false; playerMovementScript.is_swimming = false; }
     }
 
     public void DieFall()
     {
-        SceneManager.LoadScene("LevelTest");
+        SceneManager.LoadScene("level1");
     }
 
     public void DieEnemy()
     {
-        SceneManager.LoadScene("LevelTest");
+        SceneManager.LoadScene("level1");
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -52,8 +53,8 @@ public class Player_Stats : MonoBehaviour
         {
             Destroy(collision.transform.parent.gameObject);
             bonkedEnemy = true;
-            rb.velocity = new Vector2(rb.velocity.x, playerMovementScript.player_jump_power*1.5f);
-        } 
+            rb.velocity = new Vector2(rb.velocity.x, playerMovementScript.player_jump_power * 1.5f);
+        }
 
         if (collision.gameObject.CompareTag("key level item"))
         {
@@ -66,24 +67,7 @@ public class Player_Stats : MonoBehaviour
         {
             collision.gameObject.GetComponent<Animator>().SetBool("active", true);
         }
-<<<<<<< HEAD
-
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Water"))
-        {
-            playerMovementScript.is_swimming = true;
-        }
     }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Water"))
-        {
-            playerMovementScript.is_swimming = false;
-        }
-    }
-=======
-    } 
-
->>>>>>> parent of 5d62601 (o my gah)
     public bool bonked_enemy
     {
         get { return bonkedEnemy; }

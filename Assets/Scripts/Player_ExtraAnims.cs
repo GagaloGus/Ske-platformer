@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Player_ExtraAnims : MonoBehaviour
 {
-    public float enterLevelTimer;
-    
     Rigidbody2D rb;
     Animator animator;
     Player_Movement playerMovementScript;
@@ -14,7 +12,6 @@ public class Player_ExtraAnims : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        enterLevelTimer = 3.5f;
     }
 
     // Update is called once per frame
@@ -26,27 +23,11 @@ public class Player_ExtraAnims : MonoBehaviour
             Falling();
             Crouching();
             Walk();
-            Swimming();
         }
     }
     void Falling()
     {
-        if (!playerMovementScript.is_grounded && !playerMovementScript.is_swimming)
-        {
-            if (!GetComponent<Player_Stats>().bonked_enemy) {
-                if (rb.velocity.y > 0.1) { animator.SetInteger("falling", 1); }
-                else if (rb.velocity.y < -0.1) { animator.SetInteger("falling", -1); }
-            } else { animator.SetInteger("falling", 2); }  
-        }
-        else if (playerMovementScript.is_swimming)
-        {
-            animator.SetInteger("falling", 3);
-        }
-        else 
-        { 
-            animator.SetInteger("falling", 0); 
-            GetComponent<Player_Stats>().bonked_enemy = false;
-        }
+        animator.SetInteger("falling", playerMovementScript.falling_pm);
     }
     void Walk()
     {
@@ -57,12 +38,6 @@ public class Player_ExtraAnims : MonoBehaviour
     { 
         animator.SetBool("isCrouching", Input.GetKey(playerMovementScript.crouch_key));
     }
-
-    void Swimming()
-    {
-        if (playerMovementScript.is_swimming) { animator.SetInteger("falling", 3); }
-    }
-
     public void EnterLevel()
     {
         playerMovementScript.able_to_move = true;
