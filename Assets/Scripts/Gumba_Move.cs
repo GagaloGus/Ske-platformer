@@ -1,0 +1,49 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+public class Gumba_Move : MonoBehaviour
+{
+    public int enemySpeed,xMoveDirection;
+    float sizeXRatio;
+    Rigidbody2D rb;
+    SpriteRenderer sprRend;
+    BoxCollider2D boxCol2d;
+
+    LayerMask groundLayerMask;
+
+    //ignorar los otros enemigos
+    void OnEnable()
+    {
+        GameObject[] otherObjects = GameObject.FindGameObjectsWithTag("enemy");
+        foreach (GameObject obj in otherObjects)
+        {
+            Physics2D.IgnoreCollision(obj.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+        }
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        do { xMoveDirection = Random.Range(-1, 2); } while (xMoveDirection == 0);
+        rb = GetComponent<Rigidbody2D>();
+        sprRend = GetComponent<SpriteRenderer>();
+        boxCol2d = GetComponent<BoxCollider2D>();
+        groundLayerMask = LayerMask.GetMask("Ground");
+        sizeXRatio = transform.localScale.x;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+        transform.localScale = new Vector2(xMoveDirection * -1 * sizeXRatio, transform.localScale.y);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, new Vector2(xMoveDirection, 0), (boxCol2d.size.x / 2 + 0.1f) * sizeXRatio, groundLayerMask.value);
+        rb.velocity = new Vector2(xMoveDirection, 0) * enemySpeed;
+
+        if(hit.collider != null)
+        {
+            print("ow");
+            xMoveDirection *= -1;
+        }
+    }
+}
