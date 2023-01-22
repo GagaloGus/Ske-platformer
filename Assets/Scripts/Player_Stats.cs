@@ -46,7 +46,9 @@ public class Player_Stats : MonoBehaviour
 
     public void ChangeLevel()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        if(SceneManager.GetActiveScene().name == "Level 1") { SceneManager.LoadScene("Level 2"); }
+        else if (SceneManager.GetActiveScene().name == "Level 2") { SceneManager.LoadScene("Level 1"); }
+
     }
 
 

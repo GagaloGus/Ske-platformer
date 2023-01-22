@@ -76,12 +76,12 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -892179721
-  m_SortingLayer: 4
+  m_SortingLayerID: -863586295
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 1780378988, guid: d45bc4ed842b84242b60faaa6905cd1b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 2.75, y: 2.75}
@@ -158,6 +158,7 @@ MonoBehaviour:
   isSwimming: 0
   AbleToMove: 0
   falling: 0
+  boxCol2d: {fileID: 7693812282714418082}
 --- !u!95 &7693812282714418094
 Animator:
   serializedVersion: 4
@@ -202,5 +203,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e289618153759d48a026fb087154723, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxwells: 0
-  cameraGO: {fileID: 0}
+  heightDeathzone: 0
