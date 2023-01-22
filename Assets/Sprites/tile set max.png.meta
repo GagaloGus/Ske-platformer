@@ -1405,6 +1405,48 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: tile set max_61
+      rect:
+        serializedVersion: 2
+        x: 415
+        y: 162
+        width: 34
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61b58e5a4cb8763478edd099dd4de439
+      internalID: -663354565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile set max_63
+      rect:
+        serializedVersion: 2
+        x: 467
+        y: 162
+        width: 82
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 078ff0ec7e1a0fd4ab38bee22cea555e
+      internalID: 1216843850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -1452,8 +1494,8 @@ TextureImporter:
       tile set max_61: -663354565
       tile set max_50: 1624279448
       tile set max_56: 1422899173
-      tile set max_53: -535031520
       tile set max_38: 984112066
+      tile set max_53: -535031520
       tile set max_12: 825604319
       tile set max_11: 2043204682
       tile set max_63: 1216843850

@@ -78,4 +78,9 @@ public class Player_Stats : MonoBehaviour
         get { return bonkedEnemy; }
         set { bonkedEnemy = value; }
     }
+    public int maxwell_count
+    {
+        get { return maxwells; }
+        set { maxwells = value; }
+    }
 }

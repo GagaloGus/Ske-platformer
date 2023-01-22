@@ -12,6 +12,7 @@ TagManager:
   - Checkpoint
   - water
   - enemy ball
+  - maxwell end trigger
   layers:
   - Default
   - TransparentFX

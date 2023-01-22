@@ -24,6 +24,12 @@ public class Player_ExtraAnims : MonoBehaviour
             Crouching();
             Walk();
         }
+
+        if(GetComponent<Player_Stats>().maxwell_count >= 3) { EndLevelAnim(); }
+    }
+    void EndLevelAnim()
+    {
+
     }
     void Falling()
     {
