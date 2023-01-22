@@ -7,12 +7,11 @@ TagManager:
   - enemy
   - enemy bonk box
   - suelo
-  - ice
   - key level item
-  - Checkpoint
   - water
   - enemy ball
   - maxwell end trigger
+  - end light
   layers:
   - Default
   - TransparentFX
@@ -49,4 +48,19 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Fondo
+    uniqueID: 3835220681
+    locked: 0
+  - name: 3
+    uniqueID: 2250627505
+    locked: 0
+  - name: 2
+    uniqueID: 3431381001
+    locked: 0
+  - name: 1
+    uniqueID: 3402787575
+    locked: 0
+  - name: Delante
+    uniqueID: 1764937669
     locked: 0

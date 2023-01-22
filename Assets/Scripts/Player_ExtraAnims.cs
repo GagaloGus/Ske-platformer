@@ -23,14 +23,10 @@ public class Player_ExtraAnims : MonoBehaviour
             Falling();
             Crouching();
             Walk();
-        }
-
-        if(GetComponent<Player_Stats>().maxwell_count >= 3) { EndLevelAnim(); }
-    }
-    void EndLevelAnim()
-    {
+        }  else { animator.SetInteger("falling", 0); }
 
     }
+ 
     void Falling()
     {
         animator.SetInteger("falling", playerMovementScript.falling_pm);
@@ -48,4 +44,6 @@ public class Player_ExtraAnims : MonoBehaviour
     {
         playerMovementScript.able_to_move = true;
     }
+
+
 }

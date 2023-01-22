@@ -18,8 +18,13 @@ public class Dragon_shoot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.position.x > player.transform.position.x) { sprRend.flipX = true;}
-        else { sprRend.flipX = false;}
+        if(Mathf.Abs(player.transform.position.x - transform.position.x) < 10)
+        {
+            GetComponent<Animator>().SetBool("inRange", true);
+            if (transform.position.x > player.transform.position.x) { sprRend.flipX = true; }
+            else { sprRend.flipX = false; }
+        } else { GetComponent<Animator>().SetBool("inRange", false); }
+        
     }
     public void Shoot()
     {

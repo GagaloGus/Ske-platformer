@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1656347250}
   m_Layer: 0
   m_Name: fireball
-  m_TagString: Untagged
+  m_TagString: enemy ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 7056666730159367594}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.66, y: -0.05, z: 0}
-  m_LocalScale: {x: 0.44, y: 0.44, z: 0.44}
+  m_LocalScale: {x: 0.71, y: 0.71, z: 0.71}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -74,8 +74,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1764937669
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: -1652425169, guid: 1e7ed8d5d7a82974494e32bbcee4d19e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -103,7 +103,7 @@ MonoBehaviour:
   player: {fileID: 0}
   dragon: {fileID: 3836506990051324738, guid: 83a7c71e9a5723d4d8ac53a26fa75a3e, type: 3}
   despawnTimer: 5
-  speed: 4.84
+  speed: 10
 --- !u!50 &4384439991102589149
 Rigidbody2D:
   serializedVersion: 4
@@ -142,14 +142,14 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.3555555, y: 1.3777778}
+    oldSize: {x: 0.953125, y: 0.96875}
     newSize: {x: 1, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.3555555, y: 1.3777778}
+  m_Size: {x: 0.953125, y: 0.96875}
   m_EdgeRadius: 0
 --- !u!95 &1656347250
 Animator:

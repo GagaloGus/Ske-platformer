@@ -9,10 +9,9 @@ public class Player_Movement : MonoBehaviour
         sprintKey = KeyCode.LeftShift,
         crouchKey = KeyCode.LeftControl;
 
-    float
+    public float
         playerSpeed = 8,
-        moveX, 
-        playerDistanceToBottom, 
+        moveX,
         jumpTimeCounter,
         playerJumpPower = 15;
         
@@ -30,7 +29,7 @@ public class Player_Movement : MonoBehaviour
 
     SpriteRenderer sprRend;
     Rigidbody2D rb;
-    BoxCollider2D boxCol2d;
+    public BoxCollider2D boxCol2d;
     Animator animator;
     RaycastHit2D boxcasteo;
 
@@ -49,18 +48,18 @@ public class Player_Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        coordsBoxCol2d = transform.position + new Vector3(boxCol2d.offset.x, boxCol2d.offset.y, 0);
+        coordsBoxCol2d = transform.position + new Vector3(boxCol2d.offset.x, boxCol2d.offset.y - 0.2f, 0);
 
         if (AbleToMove)
         {
             moveX = Input.GetAxis("Horizontal");
             Boxcasting();
-        }
+        } else { falling = 0; }
     }
 
     void Boxcasting()
     {
-        boxcasteo = Physics2D.BoxCast(coordsBoxCol2d, boxCol2d.size + boxCol2d.size/10, 0, Vector2.down, 0.1f, groundLayerMask);
+        boxcasteo = Physics2D.BoxCast(coordsBoxCol2d, boxCol2d.size / 1.25f, 0, Vector2.down, 0.1f, groundLayerMask);
         if (boxcasteo.collider)
         {
             if (boxcasteo.collider.CompareTag("suelo"))
@@ -92,21 +91,7 @@ public class Player_Movement : MonoBehaviour
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-
-        //Check if there has been a hit yet
-        if (boxcasteo)
-        {
-            //Draw a Ray forward from GameObject toward the hit
-            Gizmos.DrawRay(coordsBoxCol2d, Vector2.down * boxcasteo.distance);
-            //Draw a cube that extends to where the hit exists
-            Gizmos.DrawWireCube(coordsBoxCol2d, boxCol2d.size);
-        }
-        //If there hasn't been a hit yet, draw the ray at the maximum distance
-        else
-        {
-            //Draw a Ray forward from GameObject toward the maximum distance
-            Gizmos.DrawRay(coordsBoxCol2d, Vector2.down * 100);
-        }
+        Gizmos.DrawWireCube(coordsBoxCol2d, boxCol2d.size/1.25f);
     }
     void Walk()
     {
@@ -159,6 +144,7 @@ public class Player_Movement : MonoBehaviour
     public int falling_pm    
     {
         get { return falling; }
+        set { falling = value; }
     }
     public float player_speed
     {
