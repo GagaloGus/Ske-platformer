@@ -9,14 +9,14 @@ public class Player_Movement : MonoBehaviour
         sprintKey = KeyCode.LeftShift,
         crouchKey = KeyCode.LeftControl;
 
-     float
+    public float
         playerSpeed = 8,
         moveX,
         jumpTimeCounter,
         playerJumpPower = 15;
         
 
-     bool
+    public bool
         isGrounded,
         isJumping,
         isSwimming,
@@ -25,11 +25,11 @@ public class Player_Movement : MonoBehaviour
     Vector2 coordsBoxCol2d;
     LayerMask groundLayerMask;
 
-     int falling;
+    public int falling;
 
     SpriteRenderer sprRend;
     Rigidbody2D rb;
-    BoxCollider2D boxCol2d;
+    public BoxCollider2D boxCol2d;
     Animator animator;
     RaycastHit2D boxcasteo;
 
@@ -88,11 +88,11 @@ public class Player_Movement : MonoBehaviour
         
     }
 
-    /*void OnDrawGizmos()
+    void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(coordsBoxCol2d, boxCol2d.size/1.25f);
-    }*/
+    }
     void Walk()
     {
         rb.gravityScale = 7; rb.drag = 0.4f;
