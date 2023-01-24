@@ -4172,11 +4172,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7693812282714418080, guid: 22065daa1fcb18341b757d3c306bd839, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -14.08
+      value: -14.8
       objectReference: {fileID: 0}
     - target: {fileID: 7693812282714418080, guid: 22065daa1fcb18341b757d3c306bd839, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 17.08
+      value: 17.06
       objectReference: {fileID: 0}
     - target: {fileID: 7693812282714418080, guid: 22065daa1fcb18341b757d3c306bd839, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8926,6 +8926,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1961491725, guid: 21e81d4e01d94dc488cccd79fa37939f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.4607345
+      objectReference: {fileID: 0}
     - target: {fileID: 4781275310328390786, guid: 21e81d4e01d94dc488cccd79fa37939f, type: 3}
       propertyPath: m_Name
       value: caseta fuera
