@@ -18,6 +18,8 @@ public class Player_ExtraAnims : MonoBehaviour
     void Update()
     {
         playerMovementScript = GetComponent<Player_Movement>();
+
+        //si se puede mover activa las animaciones
         if (playerMovementScript.able_to_move)
         {
             Falling();

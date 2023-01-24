@@ -8,6 +8,7 @@ public class EndConfig : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //encuentra al jugador y al totem del final
         player = GameObject.FindGameObjectWithTag("Player");
         lightEnd = GameObject.FindGameObjectWithTag("end light");
         lightEnd.GetComponent<Animator>().SetBool("active", false);
@@ -21,12 +22,13 @@ public class EndConfig : MonoBehaviour
 
     public void skeDance()
     {
+        //que el jugador baile
         player.GetComponent<Animator>().SetBool("endDance", true);
-        GetComponent<Animator>().SetBool("endLevelTriggered", false);
     }
 
     public void lightUp()
     {
+        //se ilumine el totem
         lightEnd.GetComponent<Animator>().SetBool("active", true);
     }
 }
