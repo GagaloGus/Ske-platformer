@@ -42,7 +42,6 @@ public class Gumba_Move : MonoBehaviour
 
         if(hit.collider != null)
         {
-            print("ow");
             xMoveDirection *= -1;
         }
     }
