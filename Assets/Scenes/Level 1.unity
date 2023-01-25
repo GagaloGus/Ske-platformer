@@ -449,7 +449,7 @@ MonoBehaviour:
   XMin: -8.3
   XMax: 46.6
   YMin: 8.67
-  YMax: 33.2
+  YMax: 30
   endPosition: {x: 49, y: 29.14502}
   levelEnded: 0
 --- !u!1001 &532308242
