@@ -9,14 +9,14 @@ public class Player_Movement : MonoBehaviour
         sprintKey = KeyCode.LeftShift,
         crouchKey = KeyCode.LeftControl;
 
-    public float
+     float
         playerSpeed = 8,
         moveX,
         jumpTimeCounter,
         playerJumpPower = 15;
         
 
-    public bool
+     bool
         isGrounded,
         isJumping,
         isSwimming,
@@ -25,7 +25,7 @@ public class Player_Movement : MonoBehaviour
     Vector2 coordsBoxCol2d;
     LayerMask groundLayerMask;
 
-    public int falling;
+     int falling;
 
     SpriteRenderer sprRend;
     Rigidbody2D rb;
@@ -103,7 +103,7 @@ public class Player_Movement : MonoBehaviour
         rb.gravityScale = 7; rb.drag = 0.4f;
 
         //si no esta agachado 
-        if (!Input.GetKey(crouchKey))
+        if (!Input.GetKey(crouchKey) && !Input.GetKey(GetComponent<Player_Stats>().counterKey))
         {
             Jump();
             //correr

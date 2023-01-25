@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Gumba_Move : MonoBehaviour
 {
-    public int enemySpeed,xMoveDirection;
+    public int enemySpeed;
+    int xMoveDirection;
     float sizeXRatio;
+    bool ableToMove;
     Rigidbody2D rb;
     SpriteRenderer sprRend;
     BoxCollider2D boxCol2d;
@@ -24,6 +26,7 @@ public class Gumba_Move : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ableToMove = true;
         //randomiza la direccion al que va
         do { xMoveDirection = Random.Range(-1, 2); } while (xMoveDirection == 0);
         rb = GetComponent<Rigidbody2D>();
@@ -41,12 +44,18 @@ public class Gumba_Move : MonoBehaviour
         transform.localScale = new Vector2(xMoveDirection * -1 * sizeXRatio, transform.localScale.y);
         //emite un raycast hacia la direccion a la que mira
         RaycastHit2D hit = Physics2D.Raycast(transform.position, new Vector2(xMoveDirection, 0), (boxCol2d.size.x / 2 + 0.1f) * sizeXRatio, groundLayerMask.value);
-        rb.velocity = new Vector2(xMoveDirection * enemySpeed, rb.velocity.y) ;
+        if (ableToMove) { rb.velocity = new Vector2(xMoveDirection * enemySpeed, rb.velocity.y); }
 
         //si encuentra el suelo se da la vuelta
         if(hit.collider != null)
         {
             xMoveDirection *= -1;
         }
+    }
+
+    public bool able_to_move
+    {
+        get { return ableToMove; }
+        set { ableToMove = value; }
     }
 }
