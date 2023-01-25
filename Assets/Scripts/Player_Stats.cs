@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class Player_Stats : MonoBehaviour
 {
     int maxwells = 0;
-    bool bonkedEnemy = false;
+    public bool bonkedEnemy = false, isCountering = false;
     Rigidbody2D rb;
     Animator animator;
     Player_Movement playerMovementScript;
