@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2145947302861883691}
   - component: {fileID: 5584533060199954935}
   - component: {fileID: 266586771}
+  - component: {fileID: -2672226224815979459}
   m_Layer: 0
   m_Name: dragon casco
   m_TagString: enemy
@@ -105,7 +106,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.18, y: 0.22}
+    oldSize: {x: 1.3138686, y: 1.6058395}
     newSize: {x: 0.18, y: 0.22}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -169,3 +170,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   fireball: {fileID: 7056666730159367594, guid: be000f56cf0317e41a7b4ff5ea067704, type: 3}
+--- !u!114 &-2672226224815979459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3836506990051324738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 622278a899f91f2499b3b5c637dc6689, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0

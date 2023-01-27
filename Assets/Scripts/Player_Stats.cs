@@ -62,13 +62,15 @@ public class Player_Stats : MonoBehaviour
             if (Input.GetKey(counterKey))
             {
                 counteredEnemy = collision.gameObject;
+                if(counteredEnemy.transform.position.x > transform.position.x ) { GetComponent<SpriteRenderer>().flipX = true; }
+                else { GetComponent<SpriteRenderer>().flipX = false; }
+
                 isCountering = true;
                 playerMovementScript.able_to_move = false;
 
-                Gumba_Move[] components = GameObject.FindObjectsOfType<Gumba_Move>();
-                foreach (Gumba_Move comp in components) { comp.GetComponent<Gumba_Move>().able_to_move = false; }
-                    
-                //collision.gameObject.GetComponent<Gumba_Move>().able_to_move = false;
+                Enemy_Stats[] components = GameObject.FindObjectsOfType<Enemy_Stats>();
+                foreach (Enemy_Stats comp in components) { comp.GetComponent<Enemy_Stats>().speed /= 3; }
+
                 rb.velocity = Vector2.zero;
                 rb.gravityScale = 0;
                 animator.SetBool("isCountering", true);
@@ -143,8 +145,8 @@ public class Player_Stats : MonoBehaviour
         playerMovementScript.able_to_move = true;
         Destroy(counteredEnemy);
 
-        Gumba_Move[] components = GameObject.FindObjectsOfType<Gumba_Move>();
-        foreach (Gumba_Move comp in components) { comp.GetComponent<Gumba_Move>().able_to_move = true; }
+        Enemy_Stats[] components = GameObject.FindObjectsOfType<Enemy_Stats>();
+        foreach (Enemy_Stats comp in components) { comp.GetComponent<Enemy_Stats>().speed *= 3; }
     }
 
     public bool bonked_enemy

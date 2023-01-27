@@ -20,15 +20,18 @@ public class Player_ExtraAnims : MonoBehaviour
         playerMovementScript = GetComponent<Player_Movement>();
 
         //si se puede mover activa las animaciones
-        if (playerMovementScript.able_to_move)
+        if (playerMovementScript.able_to_move && !Input.GetKey(GetComponent<Player_Stats>().counterKey))
         {
             Falling();
             Crouching();
             Walk();
-        }  else { animator.SetInteger("falling", 0); }
+        }
+        else if (Input.GetKey(GetComponent<Player_Stats>().counterKey)) { animator.SetBool("isMoving", false); animator.SetInteger("falling", 0); }
+        else { animator.SetInteger("falling", 0); }
+
 
     }
- 
+
     void Falling()
     {
         animator.SetInteger("falling", playerMovementScript.falling_pm);
