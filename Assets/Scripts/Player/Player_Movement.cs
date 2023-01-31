@@ -90,7 +90,6 @@ public class Player_Movement : MonoBehaviour
                 else if (rb.velocity.y < -0.1f) { falling = -1; }
             }
         }
-        
     }
 
     void Walk()
