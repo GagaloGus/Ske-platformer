@@ -50,7 +50,7 @@ public class Player_Movement : MonoBehaviour
         //determina la posicion del Boxcast segun el box collider
         coordsBoxCol2d = transform.position + new Vector3(boxCol2d.offset.x, boxCol2d.offset.y - 0.2f, 0);
 
-        if (AbleToMove && !Input.GetKey(GetComponent<Player_Stats>().counterKey))
+        if (AbleToMove)
         {
             moveX = Input.GetAxis("Horizontal");
             Boxcasting();

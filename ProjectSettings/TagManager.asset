@@ -64,3 +64,6 @@ TagManager:
   - name: Delante
     uniqueID: 1764937669
     locked: 0
+  - name: Canvas
+    uniqueID: 3250273629
+    locked: 0
