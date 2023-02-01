@@ -14,8 +14,8 @@ public class Player_Stats : MonoBehaviour
     GameObject cameraGO;
     GameObject counteredEnemy;
 
-    public bool isCountering, counterSucess;
-    public float counterTimer;
+    //public bool isCountering, counterSucess;
+    //public float counterTimer;
 
     public float heightDeathzone;
     // Start is called before the first frame update
@@ -24,7 +24,6 @@ public class Player_Stats : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         cameraGO = GameObject.FindGameObjectWithTag("MainCamera");
-        isCountering = false;
 
     }
 
@@ -40,45 +39,31 @@ public class Player_Stats : MonoBehaviour
         else { playerMovementScript.is_grounded = false; playerMovementScript.is_swimming = false; }
 
 
-        CounterDetection();
+        //CounterDetection();
     }
-
-    void CounterDetection()
+    /*void CounterDetection()
     {
-        if (Input.GetKeyDown(counterKey) && !isCountering)
+        if (!counterSucess)
         {
-            animator.SetInteger("countering", 1);
-            counterTimer = 1;
-            playerMovementScript.able_to_move = false;
-            counterSucess = false;
-            isCountering = true;
+            if (Input.GetKeyDown(counterKey) && playerMovementScript.is_grounded && !isCountering)
+            {
+                counterTimer = 1;
+                isCountering = true;
+                playerMovementScript.able_to_move = false;
+            }
+            if (isCountering)
+            {
+                counterTimer -= Time.deltaTime;
+                animator.SetInteger("countering", 1);
+            }
+
+            if ((Input.GetKeyUp(counterKey) || counterTimer <= 0) && isCountering)
+            {
+                isCountering = false;
+                playerMovementScript.able_to_move = true;
+                animator.SetInteger("countering", 0);
+            }
         }
-        else 
-        { 
-            animator.SetInteger("countering", 0);
-            playerMovementScript.able_to_move = true;
-        }
-
-        if (isCountering)
-        {
-            counterTimer -= Time.deltaTime;
-            if(counterTimer <= 0) { isCountering = false; }
-
-            if(counterSucess) { counterSucessful(); }
-        }
-    }
-
-    void counterSucessful()
-    {
-        animator.SetInteger("countering", 2);
-        if (counteredEnemy.transform.position.x > transform.position.x) { GetComponent<SpriteRenderer>().flipX = true; }
-        else { GetComponent<SpriteRenderer>().flipX = false; }
-
-        Enemy_Stats[] components = GameObject.FindObjectsOfType<Enemy_Stats>();
-        foreach (Enemy_Stats comp in components) { comp.GetComponent<Enemy_Stats>().speed /= 3; }
-
-        rb.velocity = Vector2.zero;
-        rb.gravityScale = 0;
     }
     public void endOfCounter()
     {
@@ -90,7 +75,7 @@ public class Player_Stats : MonoBehaviour
 
         Enemy_Stats[] components = GameObject.FindObjectsOfType<Enemy_Stats>();
         foreach (Enemy_Stats comp in components) { comp.GetComponent<Enemy_Stats>().speed *= 3; }
-    }
+    }*/
     public void DieFall()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -107,77 +92,72 @@ public class Player_Stats : MonoBehaviour
         else if (SceneManager.GetActiveScene().name == "Level 2") { SceneManager.LoadScene("Level 1"); }
 
     }
-
-
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("enemy"))
         {
-            if (isCountering) { counteredEnemy = collision.gameObject; counterSucess = true; }
-            else { DieEnemy(); }  
+            DieEnemy();
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!isCountering)
+        //salta en el enemigo
+        if (collision.gameObject.CompareTag("enemy bonk box"))
         {
-            //salta en el enemigo
-            if (collision.gameObject.CompareTag("enemy bonk box"))
-            {
-                Destroy(collision.transform.parent.gameObject);
-                bonkedEnemy = true;
-                //salta tras botar en el enemigo
-                rb.velocity = new Vector2(rb.velocity.x, playerMovementScript.player_jump_power * 1.5f);
-            }
-
-            //le pega un proyectil
-            if (collision.gameObject.CompareTag("enemy ball"))
-            {
-                DieEnemy();
-            }
-
-            //coje un maxwell
-            if (collision.gameObject.CompareTag("key level item"))
-            {
-                maxwells++;
-                print("mrrowww " + maxwells);
-                Destroy(collision.gameObject);
-            }
-
-
-            if (collision.gameObject.CompareTag("maxwell end trigger"))
-            {
-                //si tiene los 3 maxwells necesarios
-                if (maxwells >= 3)
-                {
-                    //el personaje no se mueva
-                    playerMovementScript.able_to_move = false;
-
-                    //pone al gato mirando a la casa
-                    GetComponent<SpriteRenderer>().flipX = true;
-
-                    //animacion de idle
-                    animator.SetBool("isMoving", false);
-                    animator.Play("idle-anim");
-
-                    //no se mueva en el eje X
-                    rb.velocity = new Vector2(0, rb.velocity.y);
-
-                    //la camara se ponga en la posicion de la cutscene
-                    cameraGO.GetComponent<CameraSystem>().levelEnded = true;
-
-                    //reproduce las animaciones del cutsscene
-                    collision.transform.parent.GetComponent<Animator>().SetBool("endLevelTriggered", true);
-                    collision.transform.parent.GetComponent<Animator>().SetBool("endLevelNot", false);
-                }
-                else
-                {
-                    collision.transform.parent.GetComponent<Animator>().SetBool("endLevelNot", true);
-                }
-            }
+            Destroy(collision.transform.parent.gameObject);
+            bonkedEnemy = true;
+            //salta tras botar en el enemigo
+            rb.velocity = new Vector2(rb.velocity.x, playerMovementScript.player_jump_power * 1.5f);
         }
+
+        //le pega un proyectil
+        if (collision.gameObject.CompareTag("enemy ball"))
+        {
+            DieEnemy();
+        }
+
+        //coje un maxwell
+        if (collision.gameObject.CompareTag("key level item"))
+        {
+            maxwells++;
+            print("mrrowww " + maxwells);
+            Destroy(collision.gameObject);
+        }
+
+
+        if (collision.gameObject.CompareTag("maxwell end trigger"))
+        {
+            //si tiene los 3 maxwells necesarios
+            if (maxwells >= 3)
+            {
+                //el personaje no se mueva
+                playerMovementScript.able_to_move = false;
+
+                //pone al gato mirando a la casa
+                GetComponent<SpriteRenderer>().flipX = true;
+
+                //animacion de idle
+                animator.SetBool("isMoving", false);
+                animator.Play("idle-anim");
+
+                //no se mueva en el eje X
+                rb.velocity = new Vector2(0, rb.velocity.y);
+
+                //la camara se ponga en la posicion de la cutscene
+                cameraGO.GetComponent<CameraSystem>().levelEnded = true;
+
+                //reproduce las animaciones del cutsscene
+                collision.transform.parent.GetComponent<Animator>().SetBool("endLevelTriggered", true);
+                collision.transform.parent.GetComponent<Animator>().SetBool("endLevelNot", false);
+            }
+            else
+            {
+                collision.transform.parent.GetComponent<Animator>().SetBool("endLevelNot", true);
+            }
+
+        }
+
     }
 
 
