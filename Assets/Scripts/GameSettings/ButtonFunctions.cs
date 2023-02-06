@@ -6,11 +6,16 @@ public class ButtonFunctions : MonoBehaviour
 {
     public void ChangeScene(string name)
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(name);
+        GameManager.instance.ChangeScene(name);
     }
 
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void PlaySoundEffect(AudioClip clip)
+    {
+        AudioManager.instance.PlayAudio(clip);
     }
 }

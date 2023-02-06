@@ -15,7 +15,6 @@ public class Player_Movement : MonoBehaviour
         jumpTimeCounter,
         playerJumpPower = 15;
         
-
      bool
         isGrounded,
         isJumping,
@@ -25,13 +24,16 @@ public class Player_Movement : MonoBehaviour
     Vector2 coordsBoxCol2d;
     LayerMask groundLayerMask;
 
-     int falling;
+    int falling;
 
     SpriteRenderer sprRend;
     Rigidbody2D rb;
     public BoxCollider2D boxCol2d;
     Animator animator;
     RaycastHit2D boxcasteo;
+
+    public AudioClip jumpSound;
+    [Range(0,1)] public float jumpSoundVol;
 
     // Start is called before the first frame update
     void Start()
@@ -126,6 +128,7 @@ public class Player_Movement : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, playerJumpPower);
             isJumping = true;
             jumpTimeCounter = 0.2f;
+            AudioManager.instance.PlayAudio(jumpSound, jumpSoundVol);
         }
 
         //permite que salte mas si sigo presionando espacio
