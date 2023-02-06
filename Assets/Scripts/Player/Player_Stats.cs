@@ -125,7 +125,6 @@ public class Player_Stats : MonoBehaviour
             Destroy(collision.gameObject);
         }
 
-
         if (collision.gameObject.CompareTag("maxwell end trigger"))
         {
             //si tiene los 3 maxwells necesarios
@@ -155,12 +154,8 @@ public class Player_Stats : MonoBehaviour
             {
                 collision.transform.parent.GetComponent<Animator>().SetBool("endLevelNot", true);
             }
-
         }
-
     }
-
-
     public bool bonked_enemy
     {
         get { return bonkedEnemy; }
