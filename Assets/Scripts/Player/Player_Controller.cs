@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player_Controller : MonoBehaviour
 {
@@ -9,7 +10,11 @@ public class Player_Controller : MonoBehaviour
         sprintKey = KeyCode.LeftShift,
         crouchKey = KeyCode.LeftControl;
 
-    public int maxwells, controlState;
+    public int maxwells;
+
+    enum playerState { Idle, Walking, GoingUp, GoingDown, Crouching, Swimming};
+       playerState controlState;
+
     public bool isGrounded, 
         isSwimming, 
         ableToMove = false, 
@@ -17,7 +22,9 @@ public class Player_Controller : MonoBehaviour
     
     public float moveX, 
         speed = 8,
-        jumpPower = 15, jumpTimeCounter;
+        jumpPower = 15, jumpTimeCounter,
+        heightDeathzone;
+
     Vector2 coordsBoxCol2d;
     LayerMask groundLayerMask;
 
@@ -55,8 +62,10 @@ public class Player_Controller : MonoBehaviour
             else { Air(); }
 
             Jump();
-            animator.SetInteger("falling", controlState);
+            animator.SetInteger("falling", ((int)controlState));
         }
+
+        if (transform.position.y < heightDeathzone) { DieFall(); }
     }
 
     void Ground()
@@ -67,9 +76,10 @@ public class Player_Controller : MonoBehaviour
             if (Input.GetKey(sprintKey)) { moveX *= 1.5f; }
             rb.velocity = new Vector2(moveX * speed, rb.velocity.y);
 
-            if (Mathf.Abs(moveX) < 0.1f) { controlState = 0; }
+            if (Mathf.Abs(moveX) < 0.1f) { controlState = playerState.Idle; }
             else { controlState = 2; }
         }
+        else { controlState = 3; rb.velocity = new Vector2(rb.velocity.x /1.02f, rb.velocity.y); }
     }
     void Swim()
     {
@@ -81,11 +91,14 @@ public class Player_Controller : MonoBehaviour
         {
             rb.velocity = new Vector2(moveX * speed / 3, jumpPower / 1.5f);
         }
+        controlState = 4;
     }
     void Air()
     {
         rb.gravityScale = 7; rb.drag = 0.4f;
+        if (Input.GetKey(sprintKey)) { moveX *= 1.5f; }
         rb.velocity = new Vector2(moveX * speed, rb.velocity.y);
+
         if(rb.velocity.y < -0.1) { controlState = -1; }
         else if (rb.velocity.y > 0.1) { controlState = 1; }
     }
@@ -122,7 +135,6 @@ public class Player_Controller : MonoBehaviour
        
         if (boxcasteo.collider)
         {
-            print(boxcasteo.collider.tag);
             //si el boxcast toca suelo
             if (boxcasteo.collider.CompareTag("suelo"))
             {
@@ -152,6 +164,81 @@ public class Player_Controller : MonoBehaviour
         //doy la vuelta al personaje y a su box collider
         if (moveX > 0 && !sprRend.flipX) { sprRend.flipX = true; boxCol2d.offset = new Vector2(boxCol2d.offset.x * -1, boxCol2d.offset.y); }
         else if (moveX < 0 && sprRend.flipX) { sprRend.flipX = false; boxCol2d.offset = new Vector2(boxCol2d.offset.x * -1, boxCol2d.offset.y); }
+    }
+
+    //Stats
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("enemy"))
+        {
+            DieEnemy();
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //salta en el enemigo
+        if (collision.gameObject.CompareTag("enemy bonk box"))
+        {
+            Destroy(collision.transform.parent.gameObject);
+            //salta tras botar en el enemigo
+            rb.velocity = new Vector2(rb.velocity.x, jumpPower * 1.5f);
+        }
+
+        //le pega un proyectil
+        if (collision.gameObject.CompareTag("enemy ball"))
+        {
+            DieEnemy();
+        }
+
+        //coje un maxwell
+        if (collision.gameObject.CompareTag("key level item"))
+        {
+            maxwells++;
+            print("mrrowww " + maxwells);
+            Destroy(collision.gameObject);
+        }
+
+        if (collision.gameObject.CompareTag("maxwell end trigger"))
+        {
+            //si tiene los 3 maxwells necesarios
+            if (maxwells >= 3)
+            {
+                //el personaje no se mueva
+                ableToMove = false;
+
+                //pone al gato mirando a la casa
+                sprRend.flipX = true;
+
+                //animacion de idle
+                animator.SetInteger("falling", 0);
+
+                //no se mueva en el eje X
+                rb.velocity = new Vector2(0, rb.velocity.y);
+
+                //la camara se ponga en la posicion de la cutscene
+                cameraGO.GetComponent<CameraSystem>().levelEnded = true;
+
+                //reproduce las animaciones del cutsscene
+                collision.transform.parent.GetComponent<Animator>().SetBool("endLevelTriggered", true);
+                collision.transform.parent.GetComponent<Animator>().SetBool("endLevelNot", false);
+            }
+            else
+            {
+                collision.transform.parent.GetComponent<Animator>().SetBool("endLevelNot", true);
+            }
+        }
+    }
+    public void DieFall()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    void DieEnemy()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    public void ChangeLevel()
+    {
+        SceneManager.LoadScene((SceneManager.GetActiveScene().buildIndex + 1) % SceneManager.sceneCount);
     }
     public void EnterLevel()
     {

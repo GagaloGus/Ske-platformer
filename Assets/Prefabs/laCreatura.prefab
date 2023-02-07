@@ -12,10 +12,8 @@ GameObject:
   - component: {fileID: 7693812282714418081}
   - component: {fileID: 7693812282714418082}
   - component: {fileID: 7693812282714418083}
-  - component: {fileID: 7693812282714418092}
   - component: {fileID: 7693812282714418094}
-  - component: {fileID: 7693812282714418087}
-  - component: {fileID: 1597732728}
+  - component: {fileID: 2024275318}
   m_Layer: 0
   m_Name: laCreatura
   m_TagString: Player
@@ -132,33 +130,11 @@ Rigidbody2D:
   m_LinearDrag: 0.4
   m_AngularDrag: 0.05
   m_GravityScale: 7
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 9c2905072e072c944867bda552251b94, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &7693812282714418092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7693812282714418088}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d07be26e46c10894883861268771307a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerSpeed: 8
-  moveX: 0
-  jumpTimeCounter: 0
-  playerJumpPower: 15
-  isGrounded: 0
-  isJumping: 0
-  isSwimming: 0
-  AbleToMove: 0
-  falling: 0
-  boxCol2d: {fileID: 7693812282714418082}
 --- !u!95 &7693812282714418094
 Animator:
   serializedVersion: 4
@@ -179,7 +155,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &7693812282714418087
+--- !u!114 &2024275318
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -188,19 +164,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 7693812282714418088}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b695f15a73e967d4899cc363a9feffc1, type: 3}
+  m_Script: {fileID: 11500000, guid: 641a22c778fb2da418f28b811e243c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1597732728
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7693812282714418088}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e289618153759d48a026fb087154723, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  maxwells: 0
+  controlState: 0
+  isGrounded: 0
+  isSwimming: 0
+  ableToMove: 0
+  isJumping: 0
+  moveX: 0
+  speed: 8
+  jumpPower: 15
+  jumpTimeCounter: 0
   heightDeathzone: 0
+  boxCol2d: {fileID: 7693812282714418082}
