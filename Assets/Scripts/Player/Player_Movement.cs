@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player_Movement : MonoBehaviour
-{
+{ 
     KeyCode
         jumpKey = KeyCode.Space,
         sprintKey = KeyCode.LeftShift,

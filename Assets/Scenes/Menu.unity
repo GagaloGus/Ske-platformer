@@ -3140,7 +3140,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ambientMusic: {fileID: 8300000, guid: 362a2a693286f0e4a8e4000627b9fe45, type: 3}
-  ambientMusicVolume: 0.323
+  ambientMusicVolume: 0.551
 --- !u!4 &1890248673
 Transform:
   m_ObjectHideFlags: 0
