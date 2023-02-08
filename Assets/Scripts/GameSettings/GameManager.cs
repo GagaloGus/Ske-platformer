@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
 
     public void ChangeScene (string name)
     {
+        time = 0;
         SceneManager.LoadScene(name);
         AudioManager.instance.ClearAudioList();
     }

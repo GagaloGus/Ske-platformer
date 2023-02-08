@@ -407,7 +407,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &214521041
 Transform:
   m_ObjectHideFlags: 0
@@ -1026,6 +1026,7 @@ GameObject:
   - component: {fileID: 596469353}
   - component: {fileID: 596469352}
   - component: {fileID: 596469351}
+  - component: {fileID: 596469354}
   m_Layer: 0
   m_Name: theEntity
   m_TagString: Untagged
@@ -1146,6 +1147,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &596469354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 596469349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e707c115c5d19f344a831119b42a3537, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &609281982
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1326,7 +1339,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1747051722}
         m_TargetAssemblyTypeName: ButtonFunctions, Assembly-CSharp
-        m_MethodName: ChangeScene
+        m_MethodName: ChangeMenuScene
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2516,7 +2529,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1747051722}
         m_TargetAssemblyTypeName: ButtonFunctions, Assembly-CSharp
-        m_MethodName: ChangeScene
+        m_MethodName: ChangeMenuScene
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2579,7 +2592,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1471291902
 Transform:
   m_ObjectHideFlags: 0

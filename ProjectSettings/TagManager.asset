@@ -12,6 +12,8 @@ TagManager:
   - enemy ball
   - maxwell end trigger
   - end light
+  - PlayerMenu
+  - item
   layers:
   - Default
   - TransparentFX

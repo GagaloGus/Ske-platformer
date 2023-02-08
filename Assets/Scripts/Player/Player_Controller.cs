@@ -10,20 +10,22 @@ public class Player_Controller : MonoBehaviour
         sprintKey = KeyCode.LeftShift,
         crouchKey = KeyCode.LeftControl;
 
-    public int maxwells;
+     int maxwells;
 
-    enum playerState { Idle, Walking, GoingUp, GoingDown, Crouching, Swimming};
+    enum playerState { Idle, Walking, GoingUp, GoingDown, Crouching, Swimming, AirSpin};
        playerState controlState;
 
-    public bool isGrounded, 
+     bool isGrounded, 
         isSwimming, 
         ableToMove = false, 
-        isJumping;
-    
-    public float moveX, 
+        isJumping,
+        bonkedEnemy;
+
+    float moveX,
         speed = 8,
-        jumpPower = 15, jumpTimeCounter,
-        heightDeathzone;
+        jumpPower = 15, jumpTimeCounter;
+
+    public float heightDeathzone;
 
     Vector2 coordsBoxCol2d;
     LayerMask groundLayerMask;
@@ -33,6 +35,11 @@ public class Player_Controller : MonoBehaviour
     SpriteRenderer sprRend;
     public BoxCollider2D boxCol2d;
     GameObject cameraGO;
+
+    //variables de audio
+    public AudioClip 
+        gem_pickup_sfx,
+        jump_sfx;
     void Start()
     {
         groundLayerMask = LayerMask.GetMask("Ground");
@@ -53,7 +60,7 @@ public class Player_Controller : MonoBehaviour
         coordsBoxCol2d = transform.position + new Vector3(boxCol2d.offset.x, boxCol2d.offset.y - 0.2f, 0);
         BoxCasting();
 
-        if (ableToMove)
+        if (ableToMove && !PauseMenu.isPaused)
         {
             moveX = Input.GetAxis("Horizontal");
 
@@ -62,7 +69,7 @@ public class Player_Controller : MonoBehaviour
             else { Air(); }
 
             Jump();
-            animator.SetInteger("falling", ((int)controlState));
+            animator.SetInteger("controlState", ((int)controlState));
         }
 
         if (transform.position.y < heightDeathzone) { DieFall(); }
@@ -77,9 +84,9 @@ public class Player_Controller : MonoBehaviour
             rb.velocity = new Vector2(moveX * speed, rb.velocity.y);
 
             if (Mathf.Abs(moveX) < 0.1f) { controlState = playerState.Idle; }
-            else { controlState = 2; }
+            else { controlState = playerState.Walking; }
         }
-        else { controlState = 3; rb.velocity = new Vector2(rb.velocity.x /1.02f, rb.velocity.y); }
+        else { controlState = playerState.Crouching; rb.velocity = new Vector2(rb.velocity.x /1.02f, rb.velocity.y); }
     }
     void Swim()
     {
@@ -91,7 +98,7 @@ public class Player_Controller : MonoBehaviour
         {
             rb.velocity = new Vector2(moveX * speed / 3, jumpPower / 1.5f);
         }
-        controlState = 4;
+        controlState = playerState.Swimming;
     }
     void Air()
     {
@@ -99,8 +106,12 @@ public class Player_Controller : MonoBehaviour
         if (Input.GetKey(sprintKey)) { moveX *= 1.5f; }
         rb.velocity = new Vector2(moveX * speed, rb.velocity.y);
 
-        if(rb.velocity.y < -0.1) { controlState = -1; }
-        else if (rb.velocity.y > 0.1) { controlState = 1; }
+        if (bonkedEnemy) { controlState = playerState.AirSpin; }
+        else
+        {
+            if (rb.velocity.y < -0.1) { controlState = playerState.GoingDown; }
+            else if (rb.velocity.y > 0.1) { controlState = playerState.GoingUp; }
+        }
     }
 
     void Jump()
@@ -146,6 +157,7 @@ public class Player_Controller : MonoBehaviour
                 isSwimming = true; isGrounded = false;
             }
             FlipPlayer();
+            bonkedEnemy = false;
         }
         //si el boxcast no toca nada
         else
@@ -182,6 +194,7 @@ public class Player_Controller : MonoBehaviour
             Destroy(collision.transform.parent.gameObject);
             //salta tras botar en el enemigo
             rb.velocity = new Vector2(rb.velocity.x, jumpPower * 1.5f);
+            bonkedEnemy = true;
         }
 
         //le pega un proyectil
@@ -190,11 +203,16 @@ public class Player_Controller : MonoBehaviour
             DieEnemy();
         }
 
+        if (collision.gameObject.CompareTag("item"))
+        {
+            GameManager.instance.gm_score = collision.GetComponent<CoinItem>().points;
+            Destroy(collision.gameObject);
+        }
+
         //coje un maxwell
         if (collision.gameObject.CompareTag("key level item"))
         {
             maxwells++;
-            print("mrrowww " + maxwells);
             Destroy(collision.gameObject);
         }
 
@@ -210,7 +228,7 @@ public class Player_Controller : MonoBehaviour
                 sprRend.flipX = true;
 
                 //animacion de idle
-                animator.SetInteger("falling", 0);
+                animator.SetInteger("controlState", 0);
 
                 //no se mueva en el eje X
                 rb.velocity = new Vector2(0, rb.velocity.y);
@@ -230,11 +248,11 @@ public class Player_Controller : MonoBehaviour
     }
     public void DieFall()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        GameManager.instance.ChangeScene(SceneManager.GetActiveScene().name);
     }
     void DieEnemy()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        GameManager.instance.ChangeScene(SceneManager.GetActiveScene().name);
     }
     public void ChangeLevel()
     {

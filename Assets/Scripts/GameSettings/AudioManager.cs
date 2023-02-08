@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
     static public AudioManager instance;
     private List<GameObject> activeAudioGameObjects;
+
+    public Slider volumeSlider;
 
     private void Awake()
     {
@@ -19,6 +22,7 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
     }
 
     public AudioSource PlayAudio(AudioClip clip, float volume = 1)
