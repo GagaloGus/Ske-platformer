@@ -20,7 +20,7 @@ public class Dragon_shoot : MonoBehaviour
     void Update()
     {
         //si la posicion en x del jugador es menor a 10 respecto a la del dragon, dispara
-        if(Mathf.Abs(player.transform.position.x - transform.position.x) < 10)
+        if(Vector2.Distance(transform.position, player.transform.position) < 10)
         {
             GetComponent<Animator>().SetBool("inRange", true);
             //se da la vuelta para mirar al jugador
@@ -32,6 +32,7 @@ public class Dragon_shoot : MonoBehaviour
     public void Shoot()
     {
         //dispara
+        AudioManager.instance.PlaySFX("Dragon Fireball");
         Instantiate(fireball, transform.position, Quaternion.identity);
     }
 }

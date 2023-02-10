@@ -8,10 +8,6 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public AudioClip sound;
 
-    [Range(0, 1)] 
-    public float soundVolume;
-
-
     private int score = 0;
     private float time = 0;
     // Start is called before the first frame update
@@ -28,11 +24,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        AudioManager.instance.PlayMusic(SceneManager.GetActiveScene().name + " Theme");
+    }
+
     public void ChangeScene (string name)
     {
         time = 0;
         SceneManager.LoadScene(name);
-        AudioManager.instance.ClearAudioList();
+        AudioManager.instance.musicSource.Stop();
+        AudioManager.instance.PlayMusic(name + " Theme");
+        print(name + " Theme");
     }
     public int gm_score
     {

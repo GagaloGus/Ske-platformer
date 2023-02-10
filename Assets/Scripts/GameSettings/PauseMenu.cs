@@ -46,4 +46,9 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1;
         isPaused = false;
     }
+
+    public void ToggleMusic() { AudioManager.instance.musicSource.mute = !AudioManager.instance.musicSource.mute; }
+    public void ToggleSFX() { AudioManager.instance.sfxSource.mute = !AudioManager.instance.sfxSource.mute; }
+    public void VolumeMusic(float volume) { AudioManager.instance.musicSource.volume = volume; }
+    public void VolumeSFX(float volume) { AudioManager.instance.sfxSource.volume = volume; }
 }

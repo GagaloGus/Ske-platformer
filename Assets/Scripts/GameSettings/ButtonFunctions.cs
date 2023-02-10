@@ -23,8 +23,10 @@ public class ButtonFunctions : MonoBehaviour
         Application.Quit();
     }
 
-    public void PlaySoundEffect(AudioClip clip)
+    public void PlaySoundEffect(string clip)
     {
-        AudioManager.instance.PlayAudio(clip);
+        AudioManager.instance.PlaySFX(clip);
     }
+
+    
 }

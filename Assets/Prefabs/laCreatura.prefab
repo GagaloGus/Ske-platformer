@@ -167,15 +167,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 641a22c778fb2da418f28b811e243c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxwells: 0
-  controlState: 0
-  isGrounded: 0
-  isSwimming: 0
-  ableToMove: 0
-  isJumping: 0
-  moveX: 0
-  speed: 8
-  jumpPower: 15
-  jumpTimeCounter: 0
   heightDeathzone: 0
   boxCol2d: {fileID: 7693812282714418082}

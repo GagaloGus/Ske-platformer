@@ -12,7 +12,7 @@ public class Player_Controller : MonoBehaviour
 
      int maxwells;
 
-    enum playerState { Idle, Walking, GoingUp, GoingDown, Crouching, Swimming, AirSpin};
+    enum playerState { Idle, Walking, GoingUp, GoingDown, Crouching, Swimming, AirSpin };
        playerState controlState;
 
      bool isGrounded, 
@@ -36,10 +36,6 @@ public class Player_Controller : MonoBehaviour
     public BoxCollider2D boxCol2d;
     GameObject cameraGO;
 
-    //variables de audio
-    public AudioClip 
-        gem_pickup_sfx,
-        jump_sfx;
     void Start()
     {
         groundLayerMask = LayerMask.GetMask("Ground");
@@ -122,7 +118,7 @@ public class Player_Controller : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpPower);
             isJumping = true;
             jumpTimeCounter = 0.2f;
-            //AudioManager.instance.PlayAudio(jumpSound, jumpSoundVol);
+            AudioManager.instance.PlaySFX("Jump");
         }
 
         //permite que salte mas si sigo presionando espacio
@@ -206,6 +202,7 @@ public class Player_Controller : MonoBehaviour
         if (collision.gameObject.CompareTag("item"))
         {
             GameManager.instance.gm_score = collision.GetComponent<CoinItem>().points;
+            AudioManager.instance.PlaySFX("Gem");
             Destroy(collision.gameObject);
         }
 
@@ -239,6 +236,9 @@ public class Player_Controller : MonoBehaviour
                 //reproduce las animaciones del cutsscene
                 collision.transform.parent.GetComponent<Animator>().SetBool("endLevelTriggered", true);
                 collision.transform.parent.GetComponent<Animator>().SetBool("endLevelNot", false);
+
+                //pare la musica de fondo
+                AudioManager.instance.musicSource.Stop();
             }
             else
             {
@@ -256,7 +256,11 @@ public class Player_Controller : MonoBehaviour
     }
     public void ChangeLevel()
     {
-        SceneManager.LoadScene((SceneManager.GetActiveScene().buildIndex + 1) % SceneManager.sceneCount);
+        AudioManager.instance.musicSource.Stop();
+        string sceneName = "";
+        if(SceneManager.GetActiveScene().name == "Level 1") { sceneName = "Level 2"; }
+        else if (SceneManager.GetActiveScene().name == "Level 2") { sceneName = "Menu"; }
+        GameManager.instance.ChangeScene(sceneName);
     }
     public void EnterLevel()
     {

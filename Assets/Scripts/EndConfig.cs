@@ -14,21 +14,17 @@ public class EndConfig : MonoBehaviour
         lightEnd.GetComponent<Animator>().SetBool("active", false);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void skeDance()
     {
         //que el jugador baile
+        AudioManager.instance.PlayMusic("Level Completed");
         player.GetComponent<Animator>().SetBool("endDance", true);
     }
 
     public void lightUp()
     {
         //se ilumine el totem
+        AudioManager.instance.PlaySFX("Totem Activated");
         lightEnd.GetComponent<Animator>().SetBool("active", true);
     }
 }
