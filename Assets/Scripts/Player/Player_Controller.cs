@@ -26,8 +26,6 @@ public class Player_Controller : MonoBehaviour
         speed = 8,
         jumpPower = 15, jumpTimeCounter;
 
-    public float heightDeathzone;
-
     Vector2 coordsBoxCol2d;
     LayerMask groundLayerMask;
 
@@ -35,7 +33,7 @@ public class Player_Controller : MonoBehaviour
     Animator animator;
     SpriteRenderer sprRend;
     public BoxCollider2D boxCol2d;
-    GameObject cameraGO;
+    GameObject cameraGO, deathMenu;
 
     void Start()
     {
@@ -46,6 +44,7 @@ public class Player_Controller : MonoBehaviour
         boxCol2d = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
         cameraGO = GameObject.FindGameObjectWithTag("MainCamera");
+        deathMenu = FindObjectOfType<DeathMenu>().gameObject;
 
         sprRend.sortingLayerName = "2";
         animator.SetBool("killed", false);
@@ -246,6 +245,10 @@ public class Player_Controller : MonoBehaviour
 
                 //pare la musica de fondo
                 AudioManager.instance.musicSource.Stop();
+
+                //para el tiempo en la cinematica
+                GameManager.instance.isCinematic = true;
+                
             }
             else
             {
@@ -257,12 +260,17 @@ public class Player_Controller : MonoBehaviour
     {
         hasDied = true;
         DeathMenu.entityKiller = enemyKiller;
-        FindObjectOfType<DeathMenu>().GetComponent<Animator>().Play("deathMenuEnter");
+        deathMenu.GetComponent<Animator>().Play("deathMenuEnter"); 
+        deathMenu.GetComponent<DeathMenu>().timeRemaining = Mathf.Round(GameManager.instance.gm_time * 100) * 0.01f;
+        deathMenu.GetComponent<DeathMenu>().scoreRemaining = GameManager.instance.gm_score;
 
-        sprRend.sortingLayerName = "Canvas";
+        sprRend.sortingLayerName = "Delante UI";
         ableToMove = false;
         rb.gravityScale = 0; rb.velocity = Vector2.zero; boxCol2d.enabled = false;
+
         animator.Play("enemyDeath");
+        animator.SetInteger("controlState", 0);
+
         AudioManager.instance.musicSource.Stop();
         AudioManager.instance.sfxSource.mute = true;
     }

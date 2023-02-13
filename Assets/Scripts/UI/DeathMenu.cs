@@ -5,12 +5,15 @@ using UnityEngine;
 public class DeathMenu : MonoBehaviour
 {
     public static string entityKiller;
-    public TMPro.TMP_Text slainText;
+    public TMPro.TMP_Text slainText, d_timeText, d_scoreText;
+    public float timeRemaining, scoreRemaining;
     // Start is called before the first frame update
 
     private void Update()
     {
         slainText.text = "You were slain by " + entityKiller;
+        d_timeText.text = "Time spent: " + timeRemaining;
+        d_scoreText.text = "Score: " + scoreRemaining;
     }
 
 

@@ -21,7 +21,8 @@ public class TextController : MonoBehaviour
     
     void UpdateText()
     {
-        timeText.text = "Time: " + Mathf.Round(GameManager.instance.gm_time * 100) * 0.01f;
+        if (!GameManager.instance.isCinematic && !GameObject.FindGameObjectWithTag("Player").GetComponent<Player_Controller>().has_died)
+            timeText.text = "Time: " + Mathf.Round(GameManager.instance.gm_time * 100) * 0.01f;
     }
 
     void UpdateScore()

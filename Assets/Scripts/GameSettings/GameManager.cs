@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    public bool isCinematic = false;
 
     private int score = 0;
     private float time = 0;
@@ -30,11 +31,11 @@ public class GameManager : MonoBehaviour
 
     public void ChangeScene (string name)
     {
+        isCinematic = false;
         time = 0; score = 0;
         SceneManager.LoadScene(name);
         AudioManager.instance.musicSource.Stop();
         AudioManager.instance.PlayMusic(name + " Theme");
-        print(name + " Theme");
     }
     public int gm_score
     {
@@ -49,5 +50,6 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         time += Time.deltaTime;
+        
     }
 }

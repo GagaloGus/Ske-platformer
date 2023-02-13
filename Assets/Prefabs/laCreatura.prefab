@@ -167,5 +167,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 641a22c778fb2da418f28b811e243c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heightDeathzone: 0
   boxCol2d: {fileID: 7693812282714418082}
