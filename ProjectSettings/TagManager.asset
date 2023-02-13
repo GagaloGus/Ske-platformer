@@ -9,11 +9,11 @@ TagManager:
   - suelo
   - key level item
   - water
-  - enemy ball
   - maxwell end trigger
   - end light
   - PlayerMenu
   - item
+  - deathZone
   layers:
   - Default
   - TransparentFX

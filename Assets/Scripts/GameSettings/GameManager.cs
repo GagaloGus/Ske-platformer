@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    public AudioClip sound;
 
     private int score = 0;
     private float time = 0;
@@ -31,7 +30,7 @@ public class GameManager : MonoBehaviour
 
     public void ChangeScene (string name)
     {
-        time = 0;
+        time = 0; score = 0;
         SceneManager.LoadScene(name);
         AudioManager.instance.musicSource.Stop();
         AudioManager.instance.PlayMusic(name + " Theme");

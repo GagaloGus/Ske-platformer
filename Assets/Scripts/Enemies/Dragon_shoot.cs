@@ -33,6 +33,7 @@ public class Dragon_shoot : MonoBehaviour
     {
         //dispara
         AudioManager.instance.PlaySFX("Dragon Fireball");
-        Instantiate(fireball, transform.position, Quaternion.identity);
+        GameObject bal = Instantiate(fireball, transform.position, Quaternion.identity);
+        bal.gameObject.name = "Fireball";
     }
 }

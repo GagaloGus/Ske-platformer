@@ -4,19 +4,21 @@ using UnityEngine;
 
 public class PauseMenu : MonoBehaviour
 {
-    public GameObject pauseMenu, optionsMenu;
+    public GameObject pauseMenu, optionsMenu, player;
     public static bool isPaused;
     // Start is called before the first frame update
     void Start()
     {
         pauseMenu.SetActive(false);
         optionsMenu.SetActive(false);
+
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !player.GetComponent<Player_Controller>().has_died)
         {
             if (isPaused) { Resume(); }
             else { Pause(); }

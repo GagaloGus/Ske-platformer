@@ -242,3 +242,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
+  able_to_move: 1
+  killScore: 75

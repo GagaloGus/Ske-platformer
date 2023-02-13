@@ -19,7 +19,8 @@ public class Player_Controller : MonoBehaviour
         isSwimming, 
         ableToMove = false, 
         isJumping,
-        bonkedEnemy;
+        bonkedEnemy,
+        hasDied;
 
     float moveX,
         speed = 8,
@@ -46,8 +47,10 @@ public class Player_Controller : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         cameraGO = GameObject.FindGameObjectWithTag("MainCamera");
 
-        //determina la posicion del Boxcast segun el box collider
-        
+        sprRend.sortingLayerName = "2";
+        animator.SetBool("killed", false);
+        boxCol2d.enabled = true;
+        hasDied = false;
     }
 
     // Update is called once per frame
@@ -67,8 +70,6 @@ public class Player_Controller : MonoBehaviour
             Jump();
             animator.SetInteger("controlState", ((int)controlState));
         }
-
-        if (transform.position.y < heightDeathzone) { DieFall(); }
     }
 
     void Ground()
@@ -179,7 +180,7 @@ public class Player_Controller : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("enemy"))
         {
-            DieEnemy();
+            Death(collision.gameObject.name);
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -191,17 +192,21 @@ public class Player_Controller : MonoBehaviour
             //salta tras botar en el enemigo
             rb.velocity = new Vector2(rb.velocity.x, jumpPower * 1.5f);
             bonkedEnemy = true;
+
+            //añade puntos
+            GameManager.instance.gm_score = collision.transform.parent.GetComponent<Enemy_Stats>().killScore;
         }
 
-        //le pega un proyectil
-        if (collision.gameObject.CompareTag("enemy ball"))
+        //le pega un proyectil o se cae al vacio
+        if (collision.gameObject.CompareTag("enemy") || collision.gameObject.CompareTag("deathZone"))
         {
-            DieEnemy();
+            Death(collision.gameObject.name);
         }
 
+        //coje una gema
         if (collision.gameObject.CompareTag("item"))
         {
-            GameManager.instance.gm_score = collision.GetComponent<CoinItem>().points;
+            GameManager.instance.gm_score = 10;
             AudioManager.instance.PlaySFX("Gem");
             Destroy(collision.gameObject);
         }
@@ -210,9 +215,11 @@ public class Player_Controller : MonoBehaviour
         if (collision.gameObject.CompareTag("key level item"))
         {
             maxwells++;
+            GameManager.instance.gm_score = 125;
             Destroy(collision.gameObject);
         }
 
+        //fin del nivel
         if (collision.gameObject.CompareTag("maxwell end trigger"))
         {
             //si tiene los 3 maxwells necesarios
@@ -246,14 +253,20 @@ public class Player_Controller : MonoBehaviour
             }
         }
     }
-    public void DieFall()
+    public void Death(string enemyKiller)
     {
-        GameManager.instance.ChangeScene(SceneManager.GetActiveScene().name);
+        hasDied = true;
+        DeathMenu.entityKiller = enemyKiller;
+        FindObjectOfType<DeathMenu>().GetComponent<Animator>().Play("deathMenuEnter");
+
+        sprRend.sortingLayerName = "Canvas";
+        ableToMove = false;
+        rb.gravityScale = 0; rb.velocity = Vector2.zero; boxCol2d.enabled = false;
+        animator.Play("enemyDeath");
+        AudioManager.instance.musicSource.Stop();
+        AudioManager.instance.sfxSource.mute = true;
     }
-    void DieEnemy()
-    {
-        GameManager.instance.ChangeScene(SceneManager.GetActiveScene().name);
-    }
+
     public void ChangeLevel()
     {
         AudioManager.instance.musicSource.Stop();
@@ -265,5 +278,11 @@ public class Player_Controller : MonoBehaviour
     public void EnterLevel()
     {
         ableToMove = true;
+    }
+
+    public bool has_died
+    {
+        get { return hasDied; }
+        set { hasDied = value; }
     }
 }

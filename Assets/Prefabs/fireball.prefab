@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: -6295843701113826019}
   m_Layer: 0
   m_Name: fireball
-  m_TagString: enemy ball
+  m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -185,3 +185,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   able_to_move: 1
+  killScore: 0
