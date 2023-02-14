@@ -16,21 +16,24 @@ public class MenuPlayer : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if(!enteringLevel)
-        animator.SetBool("clicked", true);
-        AudioManager.instance.PlaySFX("Honk fnaf");
+        //si no estoy entrando al nivel
+        if (!enteringLevel)
+        {
+            animator.SetBool("clicked", true);
+            AudioManager.instance.PlaySFX("Honk fnaf");
+        }
     }
 
-    private void OnMouseUp()
+    private void OnMouseUp() //quito el raton del personaje
     {
         animator.SetBool("clicked", false);
     }
 
-    private void OnMouseExit()
+    private void OnMouseExit() //dejo de pulsar al personaje
     {
          animator.SetBool("clicked", false);
     }
-    public void PlayerLeaveMenuAnimation()
+    public void PlayerLeaveMenuAnimation()//cambia de escena
     {
         GameManager.instance.ChangeScene(levelSelected);
     }

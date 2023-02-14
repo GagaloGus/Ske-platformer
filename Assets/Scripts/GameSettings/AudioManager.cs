@@ -23,6 +23,7 @@ public class AudioManager : MonoBehaviour
 
     public void PlayMusic(string name)
     {
+        //busca en el array el nombre de la cancion escrita, si no lo encuentra pone que no lo encontró y si si lo reproduce en el music source en loop
         Sounds s = Array.Find(musicSounds, x => x.Name == name);
         if(s == null) { Debug.LogWarning("sound not found"); }
         else
@@ -33,6 +34,7 @@ public class AudioManager : MonoBehaviour
     }
     public void PlaySFX(string name)
     {
+        //busca en el array el nombre de la cancion escrita, si no lo encuentra pone que no lo encontró y si si lo reproduce en el sfx source una vez
         Sounds s = Array.Find(sfxSounds, x => x.Name == name);
         if (s == null) { Debug.LogWarning("sound not found"); }
         else

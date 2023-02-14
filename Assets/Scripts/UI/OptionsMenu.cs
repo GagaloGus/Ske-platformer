@@ -11,9 +11,11 @@ public class OptionsMenu : MonoBehaviour
 
     private void Update()
     {
+        //cambia el sprite del volumen si esta muteado o no
         if (AudioManager.instance.musicSource.mute) { volumeButton.image.sprite = buttonSprites[1]; }
         else { volumeButton.image.sprite = buttonSprites[0]; }
 
+        //cambia el sprite del efecto de sonido si esta muteado o no
         if (AudioManager.instance.sfxSource.mute) { sfxButton.image.sprite = buttonSprites[3]; }
         else { sfxButton.image.sprite = buttonSprites[2]; }
     }

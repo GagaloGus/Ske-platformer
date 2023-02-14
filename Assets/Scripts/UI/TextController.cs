@@ -21,6 +21,7 @@ public class TextController : MonoBehaviour
     
     void UpdateText()
     {
+        //si el personaje no esta en una cinematica o muerto el tiempo fluye
         if (!GameManager.instance.isCinematic && !GameObject.FindGameObjectWithTag("Player").GetComponent<Player_Controller>().has_died)
             timeText.text = "Time: " + Mathf.Round(GameManager.instance.gm_time * 100) * 0.01f;
     }

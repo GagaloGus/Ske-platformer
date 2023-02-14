@@ -7,7 +7,10 @@ public class ButtonFunctions : MonoBehaviour
     string levelSelected;
     public void ChangeMenuScene(string name)
     {
+        //asigna el personaje a la variable
         GameObject playerMenu = FindObjectOfType<MenuPlayer>().gameObject;
+        
+        //cambia las variables de su script y animator para que se reproduzca la cinematica
         playerMenu.GetComponent<Animator>().Play("entity leave");
         playerMenu.GetComponent<MenuPlayer>().changeLevelSelected = name;
         playerMenu.GetComponent<MenuPlayer>().gs_enteringLevel = true;

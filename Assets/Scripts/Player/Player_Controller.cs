@@ -58,15 +58,18 @@ public class Player_Controller : MonoBehaviour
         coordsBoxCol2d = transform.position + new Vector3(boxCol2d.offset.x, boxCol2d.offset.y - 0.2f, 0);
         BoxCasting();
 
+        //si se puede mover y el juego no esta pausado
         if (ableToMove && !PauseMenu.isPaused)
         {
             moveX = Input.GetAxis("Horizontal");
 
+            //segun lo que detecte la caja
             if (isGrounded) { Ground(); }
             else if (isSwimming) { Swim(); }
             else { Air(); }
 
             Jump();
+            //cambia los parametros del animator
             animator.SetInteger("controlState", ((int)controlState));
         }
     }
@@ -74,11 +77,14 @@ public class Player_Controller : MonoBehaviour
     void Ground()
     {
         rb.gravityScale = 7; rb.drag = 0.4f;
+        //si no esta agachado
         if (!Input.GetKey(crouchKey))
         {
+            //correr
             if (Input.GetKey(sprintKey)) { moveX *= 1.5f; }
             rb.velocity = new Vector2(moveX * speed, rb.velocity.y);
 
+            //esta quieto o andando
             if (Mathf.Abs(moveX) < 0.1f) { controlState = playerState.Idle; }
             else { controlState = playerState.Walking; }
         }
@@ -102,9 +108,11 @@ public class Player_Controller : MonoBehaviour
         if (Input.GetKey(sprintKey)) { moveX *= 1.5f; }
         rb.velocity = new Vector2(moveX * speed, rb.velocity.y);
 
+        //si le ha pegado a un enemigo
         if (bonkedEnemy) { controlState = playerState.AirSpin; }
         else
         {
+            //subiendo o bajando
             if (rb.velocity.y < -0.1) { controlState = playerState.GoingDown; }
             else if (rb.velocity.y > 0.1) { controlState = playerState.GoingUp; }
         }
@@ -177,6 +185,7 @@ public class Player_Controller : MonoBehaviour
     //Stats
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        //le mata un enemigo
         if (collision.gameObject.CompareTag("enemy"))
         {
             Death(collision.gameObject.name);
@@ -184,7 +193,9 @@ public class Player_Controller : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //entro en el agua
         if (collision.gameObject.CompareTag("water")) { AudioManager.instance.PlaySFX("Enter water"); }
+
         //salta en el enemigo
         if (collision.gameObject.CompareTag("enemy bonk box"))
         {
@@ -266,27 +277,38 @@ public class Player_Controller : MonoBehaviour
     }
     public void Death(string enemyKiller)
     {
-        hasDied = true;
+        //se muere :(
+        hasDied = true; ableToMove = false;
+        //le pasa al script del menu de muerte que le mató
         DeathMenu.entityKiller = enemyKiller;
+
+        //activa la animacion de muerte del menu
         deathMenu.GetComponent<Animator>().Play("deathMenuEnter"); 
+        //tiempo y puntuacion restantes
         deathMenu.GetComponent<DeathMenu>().timeRemaining = Mathf.Round(GameManager.instance.gm_time * 100) * 0.01f;
         deathMenu.GetComponent<DeathMenu>().scoreRemaining = GameManager.instance.gm_score;
 
+        //pone al personaje delante de la interfaz
         sprRend.sortingLayerName = "Delante UI";
-        ableToMove = false;
+        //se quede quieto y desactiva su collider
         rb.gravityScale = 0; rb.velocity = Vector2.zero; boxCol2d.enabled = false;
 
+        //animacion de muerte
         animator.Play("enemyDeath");
         animator.SetInteger("controlState", 0);
 
+        //para todos los sonidos y reproduce el sonido de morir
         AudioManager.instance.musicSource.Stop();
         AudioManager.instance.sfxSource.Stop();
         AudioManager.instance.PlaySFX("Death");
     }
 
-    public void ChangeLevel()
+    public void ChangeLevel() //cambio de escenas al pasarse el nivel
     {
+        //para los sonidos
         AudioManager.instance.musicSource.Stop();
+
+        //string que sera el nombre del siguiente nivel respecto al nivel actual
         string sceneName = "";
         if(SceneManager.GetActiveScene().name == "Level 1") { sceneName = "Level 2"; }
         else if (SceneManager.GetActiveScene().name == "Level 2") { sceneName = "Menu"; }

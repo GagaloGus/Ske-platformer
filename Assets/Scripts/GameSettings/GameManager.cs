@@ -26,21 +26,27 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        //como el juego empieza en el menu, que reproduzca la cancion del menu
         AudioManager.instance.PlayMusic(SceneManager.GetActiveScene().name + " Theme");
     }
 
-    public void ChangeScene (string name)
+    public void ChangeScene (string name) //cambio de escena
     {
         isCinematic = false;
         time = 0; score = 0;
         SceneManager.LoadScene(name);
+
+        //para todas las canciones
         AudioManager.instance.musicSource.Stop();
+        //reproduce el tema del nivel
         AudioManager.instance.PlayMusic(name + " Theme");
+        //desmutea los efectos de sonido
         AudioManager.instance.sfxSource.mute = false;
     }
     public int gm_score
     {
         get { return score; }
+        //suma los valores directamente al score
         set { score += value; }
     }
     public float gm_time

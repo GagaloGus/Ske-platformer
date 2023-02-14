@@ -11,6 +11,7 @@ public class DeathMenu : MonoBehaviour
 
     private void Update()
     {
+        //cambia los textos de muerte
         slainText.text = "You were slain by " + entityKiller;
         d_timeText.text = "Time spent: " + timeRemaining;
         d_scoreText.text = "Score: " + scoreRemaining;
@@ -18,6 +19,7 @@ public class DeathMenu : MonoBehaviour
 
     public void PlayDeathMusic()
     {
+        //para los sfxs y reproduce el tema de muerte
         AudioManager.instance.sfxSource.mute = true;
         AudioManager.instance.PlayMusic("Death Theme");
     }

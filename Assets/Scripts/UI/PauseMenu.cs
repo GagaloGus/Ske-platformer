@@ -9,6 +9,7 @@ public class PauseMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //no esten activos al iniciar el juego
         pauseMenu.SetActive(false);
         optionsMenu.SetActive(false);
 
@@ -18,6 +19,7 @@ public class PauseMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //si le doy al escape y el personaje no esta muerto
         if (Input.GetKeyDown(KeyCode.Escape) && !player.GetComponent<Player_Controller>().has_died)
         {
             if (isPaused) { Resume(); }
@@ -29,6 +31,7 @@ public class PauseMenu : MonoBehaviour
     {
         pauseMenu.SetActive(true);
         optionsMenu.SetActive(false);
+        //para el tiempo del juego
         Time.timeScale = 0;
         isPaused = true;
     }
@@ -37,12 +40,14 @@ public class PauseMenu : MonoBehaviour
     {
         pauseMenu.SetActive(false);
         optionsMenu.SetActive(false);
+        //pone el tiempo del juego a 1
         Time.timeScale = 1;
         isPaused = false;
     }
 
     public void GoToMenu()
     {
+        //vuelve al menu
         GameManager.instance.ChangeScene("Menu");
         pauseMenu.SetActive(false);
         Time.timeScale = 1;
