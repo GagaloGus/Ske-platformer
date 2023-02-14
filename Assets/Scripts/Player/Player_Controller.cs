@@ -184,6 +184,7 @@ public class Player_Controller : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.CompareTag("water")) { AudioManager.instance.PlaySFX("Enter water"); }
         //salta en el enemigo
         if (collision.gameObject.CompareTag("enemy bonk box"))
         {
@@ -194,6 +195,8 @@ public class Player_Controller : MonoBehaviour
 
             //añade puntos
             GameManager.instance.gm_score = collision.transform.parent.GetComponent<Enemy_Stats>().killScore;
+
+            AudioManager.instance.PlaySFX("Stomp enemy");
         }
 
         //le pega un proyectil o se cae al vacio
@@ -214,6 +217,7 @@ public class Player_Controller : MonoBehaviour
         if (collision.gameObject.CompareTag("key level item"))
         {
             maxwells++;
+            AudioManager.instance.PlaySFX("Pickup maxwell");
             GameManager.instance.gm_score = 125;
             Destroy(collision.gameObject);
         }
@@ -256,6 +260,10 @@ public class Player_Controller : MonoBehaviour
             }
         }
     }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("water")) { AudioManager.instance.PlaySFX("Leave water"); }
+    }
     public void Death(string enemyKiller)
     {
         hasDied = true;
@@ -272,7 +280,8 @@ public class Player_Controller : MonoBehaviour
         animator.SetInteger("controlState", 0);
 
         AudioManager.instance.musicSource.Stop();
-        AudioManager.instance.sfxSource.mute = true;
+        AudioManager.instance.sfxSource.Stop();
+        AudioManager.instance.PlaySFX("Death");
     }
 
     public void ChangeLevel()

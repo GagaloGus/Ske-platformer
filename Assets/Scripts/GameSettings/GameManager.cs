@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(name);
         AudioManager.instance.musicSource.Stop();
         AudioManager.instance.PlayMusic(name + " Theme");
+        AudioManager.instance.sfxSource.mute = false;
     }
     public int gm_score
     {

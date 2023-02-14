@@ -16,7 +16,11 @@ public class DeathMenu : MonoBehaviour
         d_scoreText.text = "Score: " + scoreRemaining;
     }
 
-
+    public void PlayDeathMusic()
+    {
+        AudioManager.instance.sfxSource.mute = true;
+        AudioManager.instance.PlayMusic("Death Theme");
+    }
     public void GoToMenu() { GameManager.instance.ChangeScene("Menu"); }
     public void Retry() 
     { 
