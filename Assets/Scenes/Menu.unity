@@ -598,7 +598,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -4.89, y: -4.3}
-  m_SizeDelta: {x: 523.1243, y: 137.5389}
+  m_SizeDelta: {x: 483.77, y: 108.9177}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &226428498
 MonoBehaviour:
@@ -767,6 +767,8 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 476d953e570f38f45b70231181cc652b, type: 3}
   - Name: Stomp enemy
     clip: {fileID: 8300000, guid: e7d399dd881fafb4bad75020ced87f94, type: 3}
+  - Name: Honk fnaf
+    clip: {fileID: 8300000, guid: b4f0616abc7772e41b23f03bd495400a, type: 3}
   musicSource: {fileID: 202900927}
   sfxSource: {fileID: 304863406}
 --- !u!4 &250027523
@@ -843,6 +845,7 @@ GameObject:
   - component: {fileID: 304378629}
   - component: {fileID: 304378628}
   - component: {fileID: 304378627}
+  - component: {fileID: 304378631}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -934,6 +937,27 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &304378631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 304378626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e68937abb1572b4a80d2509626ccee2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumeSlider: {fileID: 1295718651583073733}
+  sfxSlider: {fileID: 8520651227020945854}
+  volumeButton: {fileID: 1295718652539522252}
+  sfxButton: {fileID: 3190078060053796461}
+  buttonSprites:
+  - {fileID: 371787448, guid: 885fa9be58e213440ba3a13ba2a37128, type: 3}
+  - {fileID: 1342168319, guid: 885fa9be58e213440ba3a13ba2a37128, type: 3}
+  - {fileID: -1293582688, guid: 885fa9be58e213440ba3a13ba2a37128, type: 3}
+  - {fileID: 1214511517, guid: 885fa9be58e213440ba3a13ba2a37128, type: 3}
 --- !u!1 &304863405
 GameObject:
   m_ObjectHideFlags: 0
@@ -1747,7 +1771,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 598505048}
-  - component: {fileID: 598505049}
   m_Layer: 0
   m_Name: OptionsMenu
   m_TagString: Untagged
@@ -1775,20 +1798,6 @@ Transform:
   m_Father: {fileID: 304378630}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &598505049
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 598505047}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e68937abb1572b4a80d2509626ccee2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  volumeSlider: {fileID: 1295718651583073733}
-  sfxSlider: {fileID: 8520651227020945854}
 --- !u!1001 &609281982
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3079,7 +3088,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0.19, y: -1.6}
-  m_SizeDelta: {x: 386.17, y: 155.5}
+  m_SizeDelta: {x: 436.2571, y: 155.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1266445910
 MonoBehaviour:
@@ -4213,8 +4222,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: -1293582688, guid: 885fa9be58e213440ba3a13ba2a37128, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -4426,7 +4435,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 598505049}
+      - m_Target: {fileID: 304378631}
         m_TargetAssemblyTypeName: OptionsMenu, Assembly-CSharp
         m_MethodName: VolumeMusic
         m_Mode: 1
@@ -4806,8 +4815,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 0.72156864}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.25490198}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -4828,7 +4837,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 598505049}
+      - m_Target: {fileID: 304378631}
         m_TargetAssemblyTypeName: OptionsMenu, Assembly-CSharp
         m_MethodName: ToggleMusic
         m_Mode: 1
@@ -4888,8 +4897,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 371787448, guid: 885fa9be58e213440ba3a13ba2a37128, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -5059,8 +5068,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 0.72156864}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.25490198}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -5081,7 +5090,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 598505049}
+      - m_Target: {fileID: 304378631}
         m_TargetAssemblyTypeName: OptionsMenu, Assembly-CSharp
         m_MethodName: ToggleSFX
         m_Mode: 1
@@ -5727,7 +5736,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 598505049}
+      - m_Target: {fileID: 304378631}
         m_TargetAssemblyTypeName: OptionsMenu, Assembly-CSharp
         m_MethodName: VolumeSFX
         m_Mode: 1

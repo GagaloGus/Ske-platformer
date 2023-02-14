@@ -14,16 +14,11 @@ public class MenuPlayer : MonoBehaviour
         enteringLevel = false;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     private void OnMouseDown()
     {
         if(!enteringLevel)
         animator.SetBool("clicked", true);
+        AudioManager.instance.PlaySFX("Honk fnaf");
     }
 
     private void OnMouseUp()
