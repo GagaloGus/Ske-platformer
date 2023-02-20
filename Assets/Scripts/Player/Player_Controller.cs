@@ -324,4 +324,9 @@ public class Player_Controller : MonoBehaviour
         get { return hasDied; }
         set { hasDied = value; }
     }
+
+    public int maxwell_count
+    {
+        get { return maxwells; }
+    }
 }
