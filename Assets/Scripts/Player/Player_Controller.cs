@@ -24,7 +24,8 @@ public class Player_Controller : MonoBehaviour
 
     float moveX,
         speed = 8,
-        jumpPower = 15, jumpTimeCounter;
+        jumpPower = 15, jumpTimeCounter,
+        speedRed, groundDrag = 1;
 
     Vector2 coordsBoxCol2d;
     LayerMask groundLayerMask;
@@ -68,9 +69,13 @@ public class Player_Controller : MonoBehaviour
             else if (isSwimming) { Swim(); }
             else { Air(); }
 
+            if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) && controlState != playerState.Crouching) 
+            { rb.velocity = new Vector2(moveX * speed / speedRed, rb.velocity.y); }
+            else { rb.velocity = new Vector2(rb.velocity.x / groundDrag, rb.velocity.y); }
+            
             Jump();
             //cambia los parametros del animator
-            animator.SetInteger("controlState", ((int)controlState));
+            animator.SetInteger("controlState", (int)controlState);
         }
     }
 
@@ -82,19 +87,18 @@ public class Player_Controller : MonoBehaviour
         {
             //correr
             if (Input.GetKey(sprintKey)) { moveX *= 1.5f; }
-            rb.velocity = new Vector2(moveX * speed, rb.velocity.y);
-
+            speedRed = 1;
             //esta quieto o andando
-            if (Mathf.Abs(moveX) < 0.1f) { controlState = playerState.Idle; }
+            if (Mathf.Abs(moveX) < 0.15f) { controlState = playerState.Idle; }
             else { controlState = playerState.Walking; }
         }
-        else { controlState = playerState.Crouching; rb.velocity = new Vector2(rb.velocity.x /1.02f, rb.velocity.y); }
+        else { controlState = playerState.Crouching;}
     }
     void Swim()
     {
         rb.gravityScale = 1; rb.drag = 4;
         //reduce el movimiento en el agua
-        rb.velocity = new Vector2(moveX * speed / 1.5f, rb.velocity.y);
+        speedRed = 1.5f;
         //nada
         if (Input.GetKeyDown(jumpKey))
         {
@@ -106,7 +110,7 @@ public class Player_Controller : MonoBehaviour
     {
         rb.gravityScale = 7; rb.drag = 0.4f;
         if (Input.GetKey(sprintKey)) { moveX *= 1.5f; }
-        rb.velocity = new Vector2(moveX * speed, rb.velocity.y);
+        speedRed = 1.1f;
 
         //si le ha pegado a un enemigo
         if (bonkedEnemy) { controlState = playerState.AirSpin; }
@@ -125,7 +129,7 @@ public class Player_Controller : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpPower);
             isJumping = true;
-            jumpTimeCounter = 0.2f;
+            jumpTimeCounter = 0.21f;
             AudioManager.instance.PlaySFX("Jump");
         }
 
@@ -154,11 +158,18 @@ public class Player_Controller : MonoBehaviour
             if (boxcasteo.collider.CompareTag("suelo"))
             {
                 isGrounded = true; isSwimming = false;
+                groundDrag = 1.1f;
             }
             //si el boxcast toca awa
             else if (boxcasteo.collider.CompareTag("water"))
             {
                 isSwimming = true; isGrounded = false;
+                groundDrag = 1;
+            }
+            else if (boxcasteo.collider.CompareTag("ice"))
+            {
+                isGrounded = true; isSwimming = false;
+                groundDrag = 1.005f;
             }
             FlipPlayer();
             bonkedEnemy = false;
@@ -309,10 +320,13 @@ public class Player_Controller : MonoBehaviour
         AudioManager.instance.musicSource.Stop();
 
         //string que sera el nombre del siguiente nivel respecto al nivel actual
-        string sceneName = "";
-        if(SceneManager.GetActiveScene().name == "Level 1") { sceneName = "Level 2"; }
-        else if (SceneManager.GetActiveScene().name == "Level 2") { sceneName = "Menu"; }
-        GameManager.instance.ChangeScene(sceneName);
+        string[] allScenes = { "Menu", "Level 1", "Level 2" };
+        int nextScene = SceneManager.GetActiveScene().buildIndex;
+
+        if (nextScene == allScenes.Length - 1) { nextScene = 0; }
+        else { nextScene++; }
+        GameManager.instance.ChangeScene(allScenes[nextScene]);
+
     }
     public void EnterLevel()
     {

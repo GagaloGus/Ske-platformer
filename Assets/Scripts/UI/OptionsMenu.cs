@@ -5,22 +5,41 @@ using UnityEngine.UI;
 
 public class OptionsMenu : MonoBehaviour
 {
-    public Slider volumeSlider, sfxSlider;
-    public Button volumeButton, sfxButton;
+    public Slider musicSlider, sfxSlider;
+    public Button musicButton, sfxButton;
     public Sprite[] buttonSprites;
 
-    private void Update()
+    private void Start()
+    {
+        ChangeButtonSprite();
+        ChangeVolumeValue();
+    }
+    public void ToggleMusic() { 
+        AudioManager.instance.ToggleMusic();
+        ChangeButtonSprite();
+    }
+    public void ToggleSFX() { 
+        AudioManager.instance.ToggleSFX();
+        ChangeButtonSprite();
+    }
+    public void VolumeMusic() { AudioManager.instance.VolumeMusic(musicSlider.value); }
+    public void VolumeSFX() { AudioManager.instance.VolumeSFX(sfxSlider.value); }
+
+    void ChangeButtonSprite()
     {
         //cambia el sprite del volumen si esta muteado o no
-        if (AudioManager.instance.musicSource.mute) { volumeButton.image.sprite = buttonSprites[1]; }
-        else { volumeButton.image.sprite = buttonSprites[0]; }
+        if (AudioManager.instance.musicSource.mute) { musicButton.image.sprite = buttonSprites[1]; }
+        else { musicButton.image.sprite = buttonSprites[0]; }
 
         //cambia el sprite del efecto de sonido si esta muteado o no
         if (AudioManager.instance.sfxSource.mute) { sfxButton.image.sprite = buttonSprites[3]; }
         else { sfxButton.image.sprite = buttonSprites[2]; }
     }
-    public void ToggleMusic() { AudioManager.instance.ToggleMusic(); }
-    public void ToggleSFX() { AudioManager.instance.ToggleSFX(); }
-    public void VolumeMusic() { AudioManager.instance.VolumeMusic(volumeSlider.value); }
-    public void VolumeSFX() { AudioManager.instance.VolumeSFX(sfxSlider.value); }
+
+    void ChangeVolumeValue()
+    {
+        //el valor de los sliders sea igual al del volumen al iniciar el nivel
+        musicSlider.value = AudioManager.instance.musicSource.volume;
+        sfxSlider.value = AudioManager.instance.sfxSource.volume;
+    }
 }

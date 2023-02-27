@@ -949,9 +949,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e68937abb1572b4a80d2509626ccee2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  volumeSlider: {fileID: 1295718651583073733}
+  musicSlider: {fileID: 1295718651583073733}
   sfxSlider: {fileID: 8520651227020945854}
-  volumeButton: {fileID: 1295718652539522252}
+  musicButton: {fileID: 1295718652539522252}
   sfxButton: {fileID: 3190078060053796461}
   buttonSprites:
   - {fileID: 371787448, guid: 885fa9be58e213440ba3a13ba2a37128, type: 3}
@@ -4481,7 +4481,7 @@ GameObject:
   - component: {fileID: 1295718651583073786}
   - component: {fileID: 1295718651583073733}
   m_Layer: 5
-  m_Name: vol slider
+  m_Name: music slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4558,7 +4558,7 @@ GameObject:
   - component: {fileID: 1295718652098620908}
   - component: {fileID: 1295718652098620909}
   m_Layer: 5
-  m_Name: Volum
+  m_Name: Moosic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
