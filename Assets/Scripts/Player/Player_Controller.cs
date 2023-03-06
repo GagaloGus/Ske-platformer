@@ -10,12 +10,12 @@ public class Player_Controller : MonoBehaviour
         sprintKey = KeyCode.LeftShift,
         crouchKey = KeyCode.LeftControl;
 
-     int maxwells;
+    int maxwells, jumpsRemaining;
 
     enum playerState { Idle, Walking, GoingUp, GoingDown, Crouching, Swimming, AirSpin };
        playerState controlState;
 
-     bool isGrounded, 
+    bool isGrounded, 
         isSwimming, 
         ableToMove = false, 
         isJumping,
@@ -48,8 +48,6 @@ public class Player_Controller : MonoBehaviour
         deathMenu = FindObjectOfType<DeathMenu>().gameObject;
 
         sprRend.sortingLayerName = "2";
-        animator.SetBool("killed", false);
-        boxCol2d.enabled = true;
         hasDied = false;
     }
 
@@ -65,7 +63,7 @@ public class Player_Controller : MonoBehaviour
             moveX = Input.GetAxis("Horizontal");
 
             //segun lo que detecte la caja
-            if (isGrounded) { Ground(); }
+            if (isGrounded) { Ground();}
             else if (isSwimming) { Swim(); }
             else { Air(); }
 
@@ -81,6 +79,7 @@ public class Player_Controller : MonoBehaviour
 
     void Ground()
     {
+        jumpsRemaining = 2;
         rb.gravityScale = 7; rb.drag = 0.4f;
         //si no esta agachado
         if (!Input.GetKey(crouchKey))
@@ -125,12 +124,13 @@ public class Player_Controller : MonoBehaviour
     void Jump()
     {
         //salta si esta en el suelo y le doy al espacio
-        if (Input.GetKeyDown(jumpKey) && isGrounded)
+        if (Input.GetKeyDown(jumpKey) && (isGrounded || jumpsRemaining > 0) && !isSwimming)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpPower);
             isJumping = true;
             jumpTimeCounter = 0.21f;
             AudioManager.instance.PlaySFX("Jump");
+            jumpsRemaining--;
         }
 
         //permite que salte mas si sigo presionando espacio
@@ -201,7 +201,16 @@ public class Player_Controller : MonoBehaviour
         {
             Death(collision.gameObject.name);
         }
+
+        if (collision.gameObject.CompareTag("lava"))
+        {
+            animator.Play("burnt");
+            animator.SetInteger("controlState", 0);
+            rb.gravityScale = 0; rb.velocity = Vector2.zero; ableToMove = false;
+            AudioManager.instance.PlaySFX("burning"); AudioManager.instance.musicSource.Stop();
+        }
     }
+    public void GoToMenu() { GameManager.instance.ChangeScene("Menu"); }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //entro en el agua
@@ -219,6 +228,8 @@ public class Player_Controller : MonoBehaviour
             GameManager.instance.gm_score = collision.transform.parent.GetComponent<Enemy_Stats>().killScore;
 
             AudioManager.instance.PlaySFX("Stomp enemy");
+
+            GameManager.instance.gm_enemyBonked = 1;
         }
 
         //le pega un proyectil o se cae al vacio
@@ -302,7 +313,7 @@ public class Player_Controller : MonoBehaviour
         //pone al personaje delante de la interfaz
         sprRend.sortingLayerName = "Delante UI";
         //se quede quieto y desactiva su collider
-        rb.gravityScale = 0; rb.velocity = Vector2.zero; boxCol2d.enabled = false;
+        rb.gravityScale = 0; rb.velocity = Vector2.zero;
 
         //animacion de muerte
         animator.Play("enemyDeath");
