@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 
     private int score = 0;
     private float time = 0;
+    private int enemiesBonked = 0;
     // Start is called before the first frame update
     void Awake()
     {
@@ -33,7 +34,7 @@ public class GameManager : MonoBehaviour
     public void ChangeScene (string name) //cambio de escena
     {
         isCinematic = false;
-        time = 0; score = 0;
+        time = 0; score = 0; enemiesBonked = 0;
         SceneManager.LoadScene(name);
 
         //para todas las canciones
@@ -54,6 +55,11 @@ public class GameManager : MonoBehaviour
         get { return time; }
     }
 
+    public int gm_enemyBonked
+    {
+        get { return enemiesBonked; }
+        set { enemiesBonked += value; }
+    }
     private void Update()
     {
         time += Time.deltaTime;

@@ -5,7 +5,7 @@ using TMPro;
 
 public class TextController : MonoBehaviour
 {
-    public TMP_Text timeText, scoreText;
+    public TMP_Text timeText, scoreText, enemyCounterText;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +17,7 @@ public class TextController : MonoBehaviour
     {
         UpdateText();
         UpdateScore();
+        enemyCounterText.text = "Enemies bonked: " + GameManager.instance.gm_enemyBonked;
     }
     
     void UpdateText()

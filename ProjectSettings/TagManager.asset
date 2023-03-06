@@ -15,6 +15,7 @@ TagManager:
   - item
   - deathZone
   - ice
+  - lava
   layers:
   - Default
   - TransparentFX
