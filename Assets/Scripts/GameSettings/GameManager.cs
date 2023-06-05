@@ -46,8 +46,7 @@ public class GameManager : MonoBehaviour
     public int gm_score
     {
         get { return score; }
-        //suma los valores directamente al score
-        set { score += value; }
+        set { score = value; }
     }
     public float gm_time
     {

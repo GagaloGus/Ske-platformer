@@ -72,7 +72,6 @@ GameObject:
   - component: {fileID: 829203872303018918}
   - component: {fileID: 829203872303018919}
   - component: {fileID: 493662111}
-  - component: {fileID: -7213241894010900809}
   m_Layer: 2
   m_Name: sebastian
   m_TagString: enemy
@@ -207,6 +206,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d88e250de47f7044bb83b7f123e64bdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  killScore: 75
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!95 &493662111
 Animator:
   serializedVersion: 4
@@ -227,18 +230,3 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &-7213241894010900809
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 829203872303018914}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 622278a899f91f2499b3b5c637dc6689, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 4
-  able_to_move: 1
-  killScore: 50

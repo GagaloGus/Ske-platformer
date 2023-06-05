@@ -45,7 +45,7 @@ public class Player_Controller : MonoBehaviour
         boxCol2d = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
         cameraGO = GameObject.FindGameObjectWithTag("MainCamera");
-        deathMenu = FindObjectOfType<DeathMenu>().gameObject;
+        deathMenu = FindObjectOfType<Canvas>().gameObject.transform.Find("DeathScreen").gameObject;
 
         sprRend.sortingLayerName = "2";
         animator.SetBool("killed", false);
@@ -69,6 +69,7 @@ public class Player_Controller : MonoBehaviour
             else if (isSwimming) { Swim(); }
             else { Air(); }
 
+            //tenga friccion en el suelo
             if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) && controlState != playerState.Crouching) 
             { rb.velocity = new Vector2(moveX * speed / speedRed, rb.velocity.y); }
             else { rb.velocity = new Vector2(rb.velocity.x / groundDrag, rb.velocity.y); }
@@ -81,13 +82,12 @@ public class Player_Controller : MonoBehaviour
 
     void Ground()
     {
-        rb.gravityScale = 7; rb.drag = 0.4f;
+        GroundGravSettings();
         //si no esta agachado
         if (!Input.GetKey(crouchKey))
         {
             //correr
             if (Input.GetKey(sprintKey)) { moveX *= 1.5f; }
-            speedRed = 1;
             //esta quieto o andando
             if (Mathf.Abs(moveX) < 0.15f) { controlState = playerState.Idle; }
             else { controlState = playerState.Walking; }
@@ -96,9 +96,9 @@ public class Player_Controller : MonoBehaviour
     }
     void Swim()
     {
-        rb.gravityScale = 1; rb.drag = 4;
+        WaterGravSettings();
         //reduce el movimiento en el agua
-        speedRed = 1.5f;
+
         //nada
         if (Input.GetKeyDown(jumpKey))
         {
@@ -108,9 +108,8 @@ public class Player_Controller : MonoBehaviour
     }
     void Air()
     {
-        rb.gravityScale = 7; rb.drag = 0.4f;
+        GroundGravSettings();
         if (Input.GetKey(sprintKey)) { moveX *= 1.5f; }
-        speedRed = 1.1f;
 
         //si le ha pegado a un enemigo
         if (bonkedEnemy) { controlState = playerState.AirSpin; }
@@ -197,7 +196,7 @@ public class Player_Controller : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //le mata un enemigo
-        if (collision.gameObject.CompareTag("enemy"))
+        if (collision.gameObject.GetComponent<Enemy>())
         {
             Death(collision.gameObject.name);
         }
@@ -216,13 +215,13 @@ public class Player_Controller : MonoBehaviour
             bonkedEnemy = true;
 
             //añade puntos
-            GameManager.instance.gm_score = collision.transform.parent.GetComponent<Enemy_Stats>().killScore;
+            GameManager.instance.gm_score += collision.transform.parent.GetComponent<Enemy>().killScore;
 
             AudioManager.instance.PlaySFX("Stomp enemy");
         }
 
         //le pega un proyectil o se cae al vacio
-        if (collision.gameObject.CompareTag("enemy") || collision.gameObject.CompareTag("deathZone"))
+        if (collision.gameObject.GetComponent<Enemy>() || collision.gameObject.CompareTag("deathZone"))
         {
             Death(collision.gameObject.name);
         }
@@ -230,7 +229,7 @@ public class Player_Controller : MonoBehaviour
         //coje una gema
         if (collision.gameObject.CompareTag("item"))
         {
-            GameManager.instance.gm_score = 10;
+            GameManager.instance.gm_score += 10;
             AudioManager.instance.PlaySFX("Gem");
             Destroy(collision.gameObject);
         }
@@ -240,7 +239,7 @@ public class Player_Controller : MonoBehaviour
         {
             maxwells++;
             AudioManager.instance.PlaySFX("Pickup maxwell");
-            GameManager.instance.gm_score = 125;
+            GameManager.instance.gm_score += 125;
             Destroy(collision.gameObject);
         }
 
@@ -292,6 +291,7 @@ public class Player_Controller : MonoBehaviour
         hasDied = true; ableToMove = false;
         //le pasa al script del menu de muerte que le mató
         DeathMenu.entityKiller = enemyKiller;
+        deathMenu.SetActive(true);
 
         //activa la animacion de muerte del menu
         deathMenu.GetComponent<Animator>().Play("deathMenuEnter"); 
@@ -331,6 +331,18 @@ public class Player_Controller : MonoBehaviour
     public void EnterLevel()
     {
         ableToMove = true;
+    }
+
+    void GroundGravSettings()
+    {
+        rb.gravityScale = 7; rb.drag = 0.4f;
+        speedRed = 1;
+    }
+
+    void WaterGravSettings()
+    {
+        rb.gravityScale = 1; rb.drag = 4;
+        speedRed = 1.5f;
     }
 
     public bool has_died

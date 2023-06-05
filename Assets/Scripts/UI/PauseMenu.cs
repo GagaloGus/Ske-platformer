@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PauseMenu : MonoBehaviour
 {
-    public GameObject pauseMenu, optionsMenu, player;
+    GameObject pauseMenu, optionsMenu, player;
     public static bool isPaused;
     // Start is called before the first frame update
     void Start()
@@ -14,6 +14,8 @@ public class PauseMenu : MonoBehaviour
         optionsMenu.SetActive(false);
 
         player = GameObject.FindGameObjectWithTag("Player");
+        pauseMenu = transform.Find("PauseMenu").gameObject;
+        optionsMenu = transform.Find("OptionsMenu").gameObject;
     }
 
     // Update is called once per frame
