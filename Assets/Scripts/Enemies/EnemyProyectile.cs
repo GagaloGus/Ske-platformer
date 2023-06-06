@@ -4,32 +4,26 @@ using UnityEngine;
 
 public class EnemyProyectile : Enemy
 {
-    private float despawnTimer;
-    protected int despawnMaxTime;
+    public int despawnTime;
     public float speed;
 
-    private void Start()
+
+
+    private new void Start()
     {
+        base.Start();
         if (transform.position.x > nearestPlayer.transform.position.x) { directionLooking = -1; }
         else { directionLooking = 1; }
 
-        speed = baseSpeed;
-    }
-
-    private void Update()
-    {
         GetComponent<Rigidbody2D>().velocity = new Vector2(baseSpeed * directionLooking, GetComponent<Rigidbody2D>().velocity.y);
 
-        DespawnProyectile();
+        base.baseSpeed = speed;
+        StartCoroutine(Despawn());
     }
 
-    public void DespawnProyectile()
+    IEnumerator Despawn()
     {
-        despawnTimer -= Time.deltaTime;
-        if (despawnTimer <= 0)
-        {
-            despawnTimer = despawnMaxTime;
-            Destroy(gameObject);
-        }
+        yield return new WaitForSeconds(despawnTime);
+        Destroy(gameObject);
     }
 }

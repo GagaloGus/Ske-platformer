@@ -4,67 +4,36 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
 {
-    protected float currentSpeed;
-    protected float baseSpeed { get; private set; }
+    protected float currentSpeed, detectPlayerRange;
+    public float baseSpeed;
     protected bool able_to_move = true;
-    protected int directionLooking = -1;
+    public int directionLooking = -1;
     protected GameObject nearestPlayer;
 
-    private float detectPlayerRange;
-    [HideInInspector]
-    public int killScore;
-
     protected LayerMask groundLayerMask;
-    SpriteRenderer sprRend;
-    private void Start()
+    protected SpriteRenderer sprRend;
+    protected virtual void Start()
     {
         FindNearestPlayer();
-        groundLayerMask = LayerMask.GetMask("Ground");
+        currentSpeed = baseSpeed;
         sprRend = GetComponent<SpriteRenderer>();
+        groundLayerMask = LayerMask.GetMask("Ground");
+
     }
 
-    private void Update()
+    protected virtual void Update()
     {
-        RaycastHit2D playerVisible = Physics2D.Raycast(transform.position, nearestPlayer.transform.position - transform.position, detectPlayerRange);
-
-        if (playerVisible.collider.GetComponent<Player_Controller>())
-        {
-            Attack();
-        }
-        else
-        {
-            Idle();
-        }
-
         if (directionLooking == 1) { sprRend.flipX = true; }
         else { sprRend.flipX = false; }
     }
-
-    void OnEnable()
-    {
-        Enemy[] otherObjects = FindObjectsOfType<Enemy>();
-        foreach (Enemy obj in otherObjects)
-        {
-            Physics2D.IgnoreCollision(obj.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>());
-        }
-    }
-
-    public virtual void Attack() { }
-    public virtual void Idle() { }
 
     public void FindNearestPlayer()
     {
         nearestPlayer = FindObjectOfType<Player_Controller>().gameObject;
     }
 
-    public void SetStats(float baseSpeed, float detectPlayerRange, int killPoints)
+    public void SetSprite(SpriteRenderer sprRend)
     {
-        this.baseSpeed = baseSpeed;
-        currentSpeed = baseSpeed;
-
-        this.detectPlayerRange = detectPlayerRange;
-        killScore = killPoints;
+        this.sprRend = sprRend;
     }
-
-
 }

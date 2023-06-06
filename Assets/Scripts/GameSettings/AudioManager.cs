@@ -7,6 +7,7 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
     public Sounds[] musicSounds, sfxSounds;
+    [HideInInspector]
     public AudioSource musicSource, sfxSource;
     private void Awake()
     {
@@ -19,6 +20,12 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        musicSource = transform.Find("Music Source").gameObject.GetComponent<AudioSource>();
+        sfxSource = transform.Find("SFX Source").gameObject.GetComponent<AudioSource>();
     }
 
     public void PlayMusic(string name)

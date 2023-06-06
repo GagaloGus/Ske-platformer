@@ -215,7 +215,7 @@ public class Player_Controller : MonoBehaviour
             bonkedEnemy = true;
 
             //añade puntos
-            GameManager.instance.gm_score += collision.transform.parent.GetComponent<Enemy>().killScore;
+            GameManager.instance.gm_score += collision.transform.parent.GetComponent<EnemyCreature>().killScore;
 
             AudioManager.instance.PlaySFX("Stomp enemy");
         }

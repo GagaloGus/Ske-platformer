@@ -101,7 +101,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   killScore: 0
-  speed: 30
+  despawnTime: 5
+  speed: 12
 --- !u!50 &4384439991102589149
 Rigidbody2D:
   serializedVersion: 4

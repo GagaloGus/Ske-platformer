@@ -5,11 +5,12 @@ using TMPro;
 
 public class TextController : MonoBehaviour
 {
-    public TMP_Text timeText, scoreText;
+    TMP_Text timeText, scoreText;
     // Start is called before the first frame update
     void Start()
     {
-        
+        timeText = transform.Find("tiempo").gameObject.GetComponent<TMP_Text>();
+        scoreText = transform.Find("score").gameObject.GetComponent<TMP_Text>();
     }
 
     // Update is called once per frame
