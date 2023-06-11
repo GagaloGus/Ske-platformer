@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1279153683
 Transform:
   m_ObjectHideFlags: 0
@@ -100,7 +100,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1961491725
 Transform:
   m_ObjectHideFlags: 0
@@ -536,6 +536,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Maxwell end1
       objectReference: {fileID: 0}
+    - target: {fileID: 4387705658887369213, guid: 08814ca5e93b1fd45a1e3be67f2110d8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 08814ca5e93b1fd45a1e3be67f2110d8, type: 3}
 --- !u!4 &4266344400580186319 stripped
@@ -676,6 +680,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Maxwell end2
       objectReference: {fileID: 0}
+    - target: {fileID: 4387705658887369213, guid: 08814ca5e93b1fd45a1e3be67f2110d8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 08814ca5e93b1fd45a1e3be67f2110d8, type: 3}
 --- !u!4 &8070889183656968685 stripped
@@ -753,6 +761,10 @@ PrefabInstance:
     - target: {fileID: 4387705658887369213, guid: 08814ca5e93b1fd45a1e3be67f2110d8, type: 3}
       propertyPath: m_Name
       value: Maxwell end3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4387705658887369213, guid: 08814ca5e93b1fd45a1e3be67f2110d8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 08814ca5e93b1fd45a1e3be67f2110d8, type: 3}

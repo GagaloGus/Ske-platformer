@@ -206,10 +206,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d88e250de47f7044bb83b7f123e64bdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  baseSpeed: 0
+  directionLooking: -1
   killScore: 75
-  groundLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!95 &493662111
 Animator:
   serializedVersion: 4

@@ -55,6 +55,9 @@ TagManager:
   - name: Fondo
     uniqueID: 3835220681
     locked: 0
+  - name: Escenario Detras
+    uniqueID: 1890997403
+    locked: 0
   - name: 3
     uniqueID: 2250627505
     locked: 0
@@ -63,6 +66,12 @@ TagManager:
     locked: 0
   - name: 1
     uniqueID: 3402787575
+    locked: 0
+  - name: Escenario
+    uniqueID: 3401331925
+    locked: 0
+  - name: Escenario Delante
+    uniqueID: 3227938317
     locked: 0
   - name: Delante
     uniqueID: 1764937669

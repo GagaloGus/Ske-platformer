@@ -19,8 +19,6 @@ public class Sebas : EnemyCreature
         SetStats(4, 5, 50);
     }
 
-    private
-
     public override void Idle()
     {
         base.Idle();
