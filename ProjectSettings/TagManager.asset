@@ -6,15 +6,14 @@ TagManager:
   tags:
   - enemy
   - enemy bonk box
-  - suelo
-  - key level item
   - water
   - maxwell end trigger
-  - end light
-  - PlayerMenu
   - item
   - deathZone
   - ice
+  - suelo
+  - key level item
+  - water bounce
   layers:
   - Default
   - TransparentFX

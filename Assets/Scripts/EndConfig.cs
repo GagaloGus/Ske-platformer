@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class EndConfig : MonoBehaviour
 {
-    public GameObject player, lightEnd;
+    GameObject player, lightEnd;
     // Start is called before the first frame update
     void Start()
     {
         //encuentra al jugador y al totem del final
-        player = GameObject.FindGameObjectWithTag("Player");
-        lightEnd = GameObject.FindGameObjectWithTag("end light");
+        player = FindObjectOfType<Player_Controller>().gameObject;
+        lightEnd = transform.Find("totem").gameObject;
         lightEnd.GetComponent<Animator>().SetBool("active", false);
     }
 

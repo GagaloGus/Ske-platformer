@@ -24,11 +24,11 @@ public class Player_Controller : MonoBehaviour
 
     float moveX,
         speed = 8,
-        jumpPower = 15, jumpTimeCounter,
+        jumpPower = 12, jumpTimeCounter,
         speedRed, groundDrag = 1;
 
-    Vector2 coordsBoxCol2d;
-    LayerMask groundLayerMask;
+    Vector2 coordsGroundcast, coordsWatercast;
+    LayerMask groundLayerMask, waterLayerMask;
 
     Rigidbody2D rb;
     Animator animator;
@@ -39,6 +39,7 @@ public class Player_Controller : MonoBehaviour
     void Start()
     {
         groundLayerMask = LayerMask.GetMask("Ground");
+        waterLayerMask = LayerMask.GetMask("Water");
 
         sprRend = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
@@ -56,7 +57,8 @@ public class Player_Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        coordsBoxCol2d = transform.position + new Vector3(boxCol2d.offset.x, boxCol2d.offset.y - 0.2f, 0);
+        coordsGroundcast = transform.position +  Vector3.up * (boxCol2d.offset.y - 0.1f);
+        coordsWatercast = transform.position + Vector3.up * 0.1f;
         BoxCasting();
 
         //si se puede mover y el juego no esta pausado
@@ -103,6 +105,7 @@ public class Player_Controller : MonoBehaviour
         if (Input.GetKeyDown(jumpKey))
         {
             rb.velocity = new Vector2(moveX * speed / 3, jumpPower / 1.5f);
+            AudioManager.instance.PlaySFX("Player_swim");
         }
         controlState = playerState.Swimming;
     }
@@ -126,10 +129,11 @@ public class Player_Controller : MonoBehaviour
         //salta si esta en el suelo y le doy al espacio
         if (Input.GetKeyDown(jumpKey) && isGrounded)
         {
+            print("joimp");
+            AudioManager.instance.PlaySFX("Jump");
             rb.velocity = new Vector2(rb.velocity.x, jumpPower);
             isJumping = true;
             jumpTimeCounter = 0.21f;
-            AudioManager.instance.PlaySFX("Jump");
         }
 
         //permite que salte mas si sigo presionando espacio
@@ -149,29 +153,25 @@ public class Player_Controller : MonoBehaviour
     }
     void BoxCasting()
     {
-        RaycastHit2D boxcasteo = Physics2D.BoxCast(coordsBoxCol2d, boxCol2d.size / 1.25f, 0, Vector2.down, 0.1f, groundLayerMask);
-       
-        if (boxcasteo.collider)
+        RaycastHit2D groundBoxcast = Physics2D.BoxCast(coordsGroundcast, boxCol2d.size / 1.25f, 0, Vector2.down, 0, groundLayerMask);
+        RaycastHit2D waterBoxcast = Physics2D.BoxCast(coordsWatercast, Vector2.one, 0, Vector2.up, 0, waterLayerMask);
+
+        if(groundBoxcast.collider || waterBoxcast.collider)
         {
-            //si el boxcast toca suelo
-            if (boxcasteo.collider.CompareTag("suelo"))
-            {
-                isGrounded = true; isSwimming = false;
-                groundDrag = 1.1f;
-            }
-            //si el boxcast toca awa
-            else if (boxcasteo.collider.CompareTag("water"))
-            {
-                isSwimming = true; isGrounded = false;
-                groundDrag = 1;
-            }
-            else if (boxcasteo.collider.CompareTag("ice"))
-            {
-                isGrounded = true; isSwimming = false;
-                groundDrag = 1.005f;
-            }
             FlipPlayer();
             bonkedEnemy = false;
+        }
+
+        
+        if (waterBoxcast.collider)
+        {
+            isGrounded = false; isSwimming = true;
+            groundDrag = 1;
+        }
+        else if (groundBoxcast.collider)
+        {
+            isGrounded = true; isSwimming = false;
+            groundDrag = 1.1f;      
         }
         //si el boxcast no toca nada
         else
@@ -182,12 +182,14 @@ public class Player_Controller : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(coordsBoxCol2d, boxCol2d.size / 1.25f);
+        Gizmos.DrawWireCube(coordsGroundcast, boxCol2d.size / 1.25f);
+        
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(coordsWatercast, Vector2.one);
     }
 
     void FlipPlayer()
     {
-        //doy la vuelta al personaje y a su box collider
         if (moveX > 0 && !sprRend.flipX) { sprRend.flipX = true; boxCol2d.offset = new Vector2(boxCol2d.offset.x * -1, boxCol2d.offset.y); }
         else if (moveX < 0 && sprRend.flipX) { sprRend.flipX = false; boxCol2d.offset = new Vector2(boxCol2d.offset.x * -1, boxCol2d.offset.y); }
     }
@@ -203,8 +205,6 @@ public class Player_Controller : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //entro en el agua
-        if (collision.gameObject.CompareTag("water")) { AudioManager.instance.PlaySFX("Enter water"); }
 
         //salta en el enemigo
         if (collision.gameObject.CompareTag("enemy bonk box"))
@@ -241,6 +241,11 @@ public class Player_Controller : MonoBehaviour
             AudioManager.instance.PlaySFX("Pickup maxwell");
             GameManager.instance.gm_score += 125;
             Destroy(collision.gameObject);
+        }
+
+        if (collision.gameObject.CompareTag("water bounce") && isSwimming)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpPower);
         }
 
         //fin del nivel
@@ -281,10 +286,7 @@ public class Player_Controller : MonoBehaviour
             }
         }
     }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("water")) { AudioManager.instance.PlaySFX("Leave water"); }
-    }
+
     public void Death(string enemyKiller)
     {
         //se muere :(
@@ -335,13 +337,13 @@ public class Player_Controller : MonoBehaviour
 
     void GroundGravSettings()
     {
-        rb.gravityScale = 7; rb.drag = 0.4f;
+        rb.gravityScale = 5; rb.drag = 0.4f;
         speedRed = 1;
     }
 
     void WaterGravSettings()
     {
-        rb.gravityScale = 1; rb.drag = 4;
+        rb.gravityScale = 1; rb.drag = 7;
         speedRed = 1.5f;
     }
 

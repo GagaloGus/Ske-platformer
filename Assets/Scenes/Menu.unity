@@ -769,6 +769,8 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: b4f0616abc7772e41b23f03bd495400a, type: 3}
   - Name: webiwabo
     clip: {fileID: 8300000, guid: 2b5037525851c344a8e333c7132f5bcc, type: 3}
+  - Name: Player_swim
+    clip: {fileID: 8300000, guid: 96b3b5a6b27459c45a289f9fde7436cf, type: 3}
   musicSource: {fileID: 202900927}
   sfxSource: {fileID: 304863406}
 --- !u!4 &250027523
@@ -1469,7 +1471,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -285290931
-  m_SortingLayer: 7
+  m_SortingLayer: 10
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 85817ce5c261f8e40a0993520692262e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

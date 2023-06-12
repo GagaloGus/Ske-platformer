@@ -686,7 +686,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2044339791
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8ab40388c77319b4faf04f0a98338193, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -889,7 +889,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2044339791
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d49e1d7ddccd8cd419786902f6d88973, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1645,7 +1645,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -892179721
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 344471028, guid: 1e7ed8d5d7a82974494e32bbcee4d19e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1747,7 +1747,7 @@ GameObject:
   - component: {fileID: 794421564}
   - component: {fileID: 794421563}
   - component: {fileID: 794421562}
-  m_Layer: 3
+  m_Layer: 4
   m_Name: Tilemap water
   m_TagString: water
   m_Icon: {fileID: 0}
@@ -1824,7 +1824,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -892179721
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0.016129017, y: 0.016129017, z: 0}
@@ -5968,7 +5968,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1764937669
-  m_SortingLayer: 5
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0.016129017, y: 0.016129017, z: 0}
@@ -11723,7 +11723,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2044339791
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: dec3da97b100d8c4a830ebf44e7c8dbc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

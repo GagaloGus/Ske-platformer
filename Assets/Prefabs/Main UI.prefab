@@ -128,7 +128,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.144, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1230,8 +1230,8 @@ RectTransform:
   m_Father: {fileID: 1106631230}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.144, y: 0}
+  m_AnchorMax: {x: 0.144, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1576,8 +1576,8 @@ RectTransform:
   m_Father: {fileID: 2959189697474898529}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.415, y: 0}
+  m_AnchorMax: {x: 0.415, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1934,7 +1934,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.415, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2869,7 +2869,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5915480018054558732
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2949,7 +2949,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6238931608876982145
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4395,9 +4395,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6a00f054c75fc24bbebc0213db35039, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenu: {fileID: 8858133263673197518}
-  optionsMenu: {fileID: 4618266476132362675}
-  player: {fileID: 0}
 --- !u!114 &8858133262249979185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4431,8 +4428,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d61f7c1dc94bda43a10b40bda7628d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeText: {fileID: 8858133262438724266}
-  scoreText: {fileID: 1565618473}
 --- !u!1 &8858133263546301355
 GameObject:
   m_ObjectHideFlags: 0
