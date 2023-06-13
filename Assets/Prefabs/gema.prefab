@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6567359622606737944}
   - component: {fileID: 6567359622606737945}
   - component: {fileID: 1450963989}
+  - component: {fileID: 631252584452366697}
   m_Layer: 0
   m_Name: gema
   m_TagString: item
@@ -73,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -863586295
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: -890785572, guid: 54e1672ef3fd07b4bb556059b6ff3517, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -132,3 +133,17 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &631252584452366697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6567359622606737946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2b38e2814edecb47a114eee28ab1992, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  points: 10
+  pickupSFX: Gem

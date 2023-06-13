@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class CameraSystem : MonoBehaviour
 {
-    public GameObject player;
+    GameObject player, casetafuera;
     public float XMin, XMax,YMin, YMax;
     public Vector2 endPosition;
-    public bool levelEnded;
+    public bool levelEnded, followPlayer;
 
     // Start is called before the first frame update
     void Start()
     {
-        levelEnded = false;
+        levelEnded = false; followPlayer = true ;
         //encuenta al jugador
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = FindObjectOfType<Player_Controller>().gameObject;
+        casetafuera = FindObjectOfType<EndConfig>().gameObject;
+        endPosition = casetafuera.transform.position + new Vector3(-4.9f, 0, -127);
     }
 
     // Update is called once per frame
@@ -25,8 +27,9 @@ public class CameraSystem : MonoBehaviour
         float x = Mathf.Clamp(player.transform.position.x, XMin, XMax);
         float y = Mathf.Clamp(player.transform.position.y, YMin, YMax);
         //si el nivel acaba, la camara se pone en la posicion indicada en el inspector para el cutscene
-        if (!levelEnded) { transform.position = new Vector3(x, y, transform.position.z); } 
-        else { transform.position = new Vector3(endPosition.x, y, transform.position.z); }
+        if (!levelEnded && followPlayer) { transform.position = new Vector3(x, y, transform.position.z); } 
+        else if (levelEnded) { transform.position = new Vector3(endPosition.x, endPosition.y, transform.position.z); }
+        else { }
         
     }
 

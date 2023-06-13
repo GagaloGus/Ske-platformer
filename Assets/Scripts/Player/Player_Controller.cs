@@ -34,7 +34,7 @@ public class Player_Controller : MonoBehaviour
     Animator animator;
     SpriteRenderer sprRend;
     public BoxCollider2D boxCol2d;
-    GameObject cameraGO, deathMenu;
+    GameObject mainCam, deathMenu;
 
     void Start()
     {
@@ -45,7 +45,7 @@ public class Player_Controller : MonoBehaviour
         animator = GetComponent<Animator>();
         boxCol2d = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
-        cameraGO = GameObject.FindGameObjectWithTag("MainCamera");
+        mainCam = GameObject.FindGameObjectWithTag("MainCamera");
         deathMenu = FindObjectOfType<Canvas>().gameObject.transform.Find("DeathScreen").gameObject;
 
         sprRend.sortingLayerName = "2";
@@ -129,7 +129,6 @@ public class Player_Controller : MonoBehaviour
         //salta si esta en el suelo y le doy al espacio
         if (Input.GetKeyDown(jumpKey) && isGrounded)
         {
-            print("joimp");
             AudioManager.instance.PlaySFX("Jump");
             rb.velocity = new Vector2(rb.velocity.x, jumpPower);
             isJumping = true;
@@ -226,14 +225,6 @@ public class Player_Controller : MonoBehaviour
             Death(collision.gameObject.name);
         }
 
-        //coje una gema
-        if (collision.gameObject.CompareTag("item"))
-        {
-            GameManager.instance.gm_score += 10;
-            AudioManager.instance.PlaySFX("Gem");
-            Destroy(collision.gameObject);
-        }
-
         //coje un maxwell
         if (collision.gameObject.CompareTag("key level item"))
         {
@@ -243,9 +234,15 @@ public class Player_Controller : MonoBehaviour
             Destroy(collision.gameObject);
         }
 
-        if (collision.gameObject.CompareTag("water bounce") && isSwimming)
+        if (collision.gameObject.CompareTag("water bounce") && isSwimming && rb.velocity.y > 0)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpPower);
+        }
+
+        if (collision.gameObject.CompareTag("camera zoom trig"))
+        {
+            var cameraComp = Camera.main.GetComponent<Animator>();              
+            cameraComp.SetBool("mirror", transform.position.x < collision.gameObject.transform.position.x);
         }
 
         //fin del nivel
@@ -267,7 +264,7 @@ public class Player_Controller : MonoBehaviour
                 rb.velocity = new Vector2(0, rb.velocity.y);
 
                 //la camara se ponga en la posicion de la cutscene
-                cameraGO.GetComponent<CameraSystem>().levelEnded = true;
+                mainCam.GetComponent<CameraSystem>().levelEnded = true;
 
                 //reproduce las animaciones del cutsscene
                 collision.transform.parent.GetComponent<Animator>().SetBool("endLevelTriggered", true);
@@ -302,13 +299,20 @@ public class Player_Controller : MonoBehaviour
         deathMenu.GetComponent<DeathMenu>().scoreRemaining = GameManager.instance.gm_score;
 
         //pone al personaje delante de la interfaz
-        sprRend.sortingLayerName = "Delante UI";
         //se quede quieto y desactiva su collider
-        rb.gravityScale = 0; rb.velocity = Vector2.zero; boxCol2d.enabled = false;
+        if(enemyKiller != "The Void") 
+        { 
+            sprRend.sortingLayerName = "Delante UI";
+
+            rb.gravityScale = 0; rb.velocity = Vector2.zero;
+
+            animator.Play("enemyDeath");
+            animator.SetInteger("controlState", 0);
+        }
+        mainCam.GetComponent<CameraSystem>().followPlayer = false;
+        boxCol2d.enabled = false;
 
         //animacion de muerte
-        animator.Play("enemyDeath");
-        animator.SetInteger("controlState", 0);
 
         //para todos los sonidos y reproduce el sonido de morir
         AudioManager.instance.musicSource.Stop();
@@ -322,7 +326,7 @@ public class Player_Controller : MonoBehaviour
         AudioManager.instance.musicSource.Stop();
 
         //string que sera el nombre del siguiente nivel respecto al nivel actual
-        string[] allScenes = { "Menu", "Level 1", "Level 2" };
+        string[] allScenes = { "Menu", "Level 1", "Level 2", "Level 3" };
         int nextScene = SceneManager.GetActiveScene().buildIndex;
 
         if (nextScene == allScenes.Length - 1) { nextScene = 0; }

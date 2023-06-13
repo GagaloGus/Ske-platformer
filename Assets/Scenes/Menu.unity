@@ -742,13 +742,15 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 9b6e665f58e530e459a21b107943065a, type: 3}
   - Name: Level 2 Theme
     clip: {fileID: 8300000, guid: fc3da52ad4f794d42a1ec639d8a4ee43, type: 3}
+  - Name: Level 3 Theme
+    clip: {fileID: 8300000, guid: c66b45db64d323241a671543d01f316a, type: 3}
   - Name: Level Completed
     clip: {fileID: 8300000, guid: 2ecbc3c6a5a17b346b2c6d5b871f6736, type: 3}
   - Name: Death Theme
     clip: {fileID: 8300000, guid: 24b1a36d3f8e90a40addbbdcd8c35d26, type: 3}
   sfxSounds:
   - Name: Jump
-    clip: {fileID: 8300000, guid: 5516da005e290cd4f830d4df8e36edbd, type: 3}
+    clip: {fileID: 8300000, guid: 91f82e80383401c4982a7c25257ad6f4, type: 3}
   - Name: Death
     clip: {fileID: 8300000, guid: 1f0cde7124a6c1846abdbcde85f5013d, type: 3}
   - Name: Gem

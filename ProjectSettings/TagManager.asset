@@ -14,6 +14,7 @@ TagManager:
   - suelo
   - key level item
   - water bounce
+  - camera zoom trig
   layers:
   - Default
   - TransparentFX
