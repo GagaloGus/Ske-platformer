@@ -239,10 +239,14 @@ public class Player_Controller : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpPower);
         }
 
-        if (collision.gameObject.CompareTag("camera zoom trig"))
+        if (collision.gameObject.GetComponent<CameraZoomTrigger>())
         {
-            var cameraComp = Camera.main.GetComponent<Animator>();              
-            cameraComp.SetBool("mirror", transform.position.x < collision.gameObject.transform.position.x);
+            bool playerRight = transform.position.x > collision.gameObject.transform.position.x;
+            var triggerZoomData = collision.gameObject.GetComponent<CameraZoomTrigger>();
+
+            if (playerRight && triggerZoomData.enterRight) { Camera.main.SendMessage("StartZoomTransition", triggerZoomData.cameraZoom ); }
+            else { Camera.main.SendMessage("StartZoomTransition", triggerZoomData.cameraZoomDefault); }
+            
         }
 
         //fin del nivel

@@ -33,5 +33,34 @@ public class CameraSystem : MonoBehaviour
         
     }
 
+    IEnumerator ZoomTransition(float zoomValue)
+    {
+        float currentZoom = GetComponent<Camera>().orthographicSize;
+        float ratio = Mathf.Abs(zoomValue - currentZoom) / 20;
 
+        bool currentGreaterthanZoom = currentZoom > zoomValue;
+        if (currentGreaterthanZoom)
+        {
+            for (float i = currentZoom; i > zoomValue; i -= ratio)
+            {
+                currentZoom = i;
+                yield return new WaitForSeconds(1 / 20f);
+            }
+        } 
+        else
+        {
+            for (float i = currentZoom; i < zoomValue; i+= ratio)
+            {
+                currentZoom = i;
+                yield return new WaitForSeconds(1 / 20f);
+            }
+        }
+        
+    }
+
+    public void StartZoomTransition(float zoomValue)
+    {
+        print("zoomeao");
+        StartCoroutine(ZoomTransition(zoomValue));
+    }
 }

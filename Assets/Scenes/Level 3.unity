@@ -68897,7 +68897,6 @@ GameObject:
   - component: {fileID: 510389450}
   - component: {fileID: 510389449}
   - component: {fileID: 510389452}
-  - component: {fileID: 510389453}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -68992,26 +68991,6 @@ MonoBehaviour:
   endPosition: {x: 48.47, y: 29.14502}
   levelEnded: 0
   followPlayer: 0
---- !u!95 &510389453
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 510389448}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4cca5b78e2e56d44ab69615c58cae00a, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &913177544
 GameObject:
   m_ObjectHideFlags: 0
@@ -99446,9 +99425,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1348582677}
   - component: {fileID: 1348582678}
+  - component: {fileID: 1348582679}
   m_Layer: 0
   m_Name: camera zoom trig
-  m_TagString: camera zoom trig
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99497,6 +99477,21 @@ PolygonCollider2D:
       - {x: 0, y: 7.761154}
       - {x: 0, y: -37.22}
       - {x: 1, y: -37.16}
+--- !u!114 &1348582679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348582676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6726013f886e3e545b074ad180c01c44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraZoom: 5.2
+  cameraZoomDefault: 4.6
+  enterRight: 0
 --- !u!1 &1564369390
 GameObject:
   m_ObjectHideFlags: 0
@@ -99896,7 +99891,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1928973105}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 21.6, y: 38.2, z: 0}
+  m_LocalPosition: {x: 21.6, y: 42.2, z: 0}
   m_LocalScale: {x: 19.7, y: 18.919802, z: 18.919802}
   m_ConstrainProportionsScale: 1
   m_Children: []
