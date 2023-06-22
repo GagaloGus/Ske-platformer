@@ -38,21 +38,23 @@ public class CameraSystem : MonoBehaviour
         float currentZoom = GetComponent<Camera>().orthographicSize;
         float ratio = Mathf.Abs(zoomValue - currentZoom) / 20;
 
-        bool currentGreaterthanZoom = currentZoom > zoomValue;
-        if (currentGreaterthanZoom)
+        if (currentZoom > zoomValue)
         {
             for (float i = currentZoom; i > zoomValue; i -= ratio)
             {
                 currentZoom = i;
-                yield return new WaitForSeconds(1 / 20f);
+                GetComponent<Camera>().orthographicSize = currentZoom;
+                yield return new WaitForSeconds(1 / 22f);
             }
         } 
         else
         {
+
             for (float i = currentZoom; i < zoomValue; i+= ratio)
             {
                 currentZoom = i;
-                yield return new WaitForSeconds(1 / 20f);
+                GetComponent<Camera>().orthographicSize = currentZoom;
+                yield return new WaitForSeconds(1 / 22f);
             }
         }
         
@@ -60,7 +62,7 @@ public class CameraSystem : MonoBehaviour
 
     public void StartZoomTransition(float zoomValue)
     {
-        print("zoomeao");
+        StopAllCoroutines();
         StartCoroutine(ZoomTransition(zoomValue));
     }
 }

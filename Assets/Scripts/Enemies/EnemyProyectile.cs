@@ -15,9 +15,9 @@ public class EnemyProyectile : Enemy
         if (transform.position.x > nearestPlayer.transform.position.x) { directionLooking = -1; }
         else { directionLooking = 1; }
 
+        base.baseSpeed = speed;
         GetComponent<Rigidbody2D>().velocity = new Vector2(baseSpeed * directionLooking, GetComponent<Rigidbody2D>().velocity.y);
 
-        base.baseSpeed = speed;
         StartCoroutine(Despawn());
     }
 

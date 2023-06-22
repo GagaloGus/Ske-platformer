@@ -34,7 +34,7 @@ public class Player_Controller : MonoBehaviour
     Animator animator;
     SpriteRenderer sprRend;
     public BoxCollider2D boxCol2d;
-    GameObject mainCam, deathMenu;
+    GameObject deathMenu;
 
     void Start()
     {
@@ -45,7 +45,6 @@ public class Player_Controller : MonoBehaviour
         animator = GetComponent<Animator>();
         boxCol2d = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
-        mainCam = GameObject.FindGameObjectWithTag("MainCamera");
         deathMenu = FindObjectOfType<Canvas>().gameObject.transform.Find("DeathScreen").gameObject;
 
         sprRend.sortingLayerName = "2";
@@ -244,7 +243,7 @@ public class Player_Controller : MonoBehaviour
             bool playerRight = transform.position.x > collision.gameObject.transform.position.x;
             var triggerZoomData = collision.gameObject.GetComponent<CameraZoomTrigger>();
 
-            if (playerRight && triggerZoomData.enterRight) { Camera.main.SendMessage("StartZoomTransition", triggerZoomData.cameraZoom ); }
+            if (playerRight == triggerZoomData.enterRight) { Camera.main.SendMessage("StartZoomTransition", triggerZoomData.cameraZoom ); }
             else { Camera.main.SendMessage("StartZoomTransition", triggerZoomData.cameraZoomDefault); }
             
         }
@@ -268,7 +267,7 @@ public class Player_Controller : MonoBehaviour
                 rb.velocity = new Vector2(0, rb.velocity.y);
 
                 //la camara se ponga en la posicion de la cutscene
-                mainCam.GetComponent<CameraSystem>().levelEnded = true;
+                Camera.main.GetComponent<CameraSystem>().levelEnded = true;
 
                 //reproduce las animaciones del cutsscene
                 collision.transform.parent.GetComponent<Animator>().SetBool("endLevelTriggered", true);
@@ -285,6 +284,15 @@ public class Player_Controller : MonoBehaviour
             {
                 collision.transform.parent.GetComponent<Animator>().SetBool("endLevelNot", true);
             }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("water") && collision.ClosestPoint(transform.position).y < transform.position.y)
+        {
+            
+            rb.velocity = new Vector2(rb.velocity.x, jumpPower);
         }
     }
 
@@ -313,14 +321,16 @@ public class Player_Controller : MonoBehaviour
             animator.Play("enemyDeath");
             animator.SetInteger("controlState", 0);
         }
-        mainCam.GetComponent<CameraSystem>().followPlayer = false;
+        Camera.main.GetComponent<CameraSystem>().followPlayer = false;
         boxCol2d.enabled = false;
+        transform.DetachChildren();
 
         //animacion de muerte
 
         //para todos los sonidos y reproduce el sonido de morir
         AudioManager.instance.musicSource.Stop();
         AudioManager.instance.sfxSource.Stop();
+
         AudioManager.instance.PlaySFX("Death");
     }
 
